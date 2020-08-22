@@ -1,20 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
+import handleReceiveUsers from "../actions/users";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,8 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
+  const { users } = props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -53,15 +49,24 @@ export default function SignIn() {
           Sign in
         </Typography>
         <form className={classes.form} noValidate>
-          <Select
-            className={classes.select}
-            labelId="label"
-            id="select"
-            value="20"
-          >
-            <MenuItem value="10">Ten</MenuItem>
-            <MenuItem value="20">Twenty</MenuItem>
-          </Select>
+          {typeof users !== "undefined" && (
+            <Select
+              className={classes.select}
+              labelId="label"
+              id="select"
+              value=""
+            >
+              {Object.keys(users).map((key) => {
+                return (
+                  <MenuItem key={key} value={key} onClick={(e) => alert(key)}>
+                    {key}
+                  </MenuItem>
+                );
+              })}
+              <MenuItem value=""></MenuItem>
+            </Select>
+          )}
+
           <Button
             type="submit"
             fullWidth
@@ -76,3 +81,12 @@ export default function SignIn() {
     </Container>
   );
 }
+
+function mapStateToProps(users) {
+  console.log("From mapStateToProps", users);
+  return {
+    users,
+  };
+}
+
+export default connect(mapStateToProps)(SignIn);
