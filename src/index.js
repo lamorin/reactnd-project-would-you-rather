@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import middleware from "./middleware";
-import users from "./reducers/users";
+import reducers from "./reducers/";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import handleReceiveUsers from "./actions/users";
 
-const store = createStore(users, middleware);
+const store = createStore(reducers, middleware);
 
 store.dispatch(handleReceiveUsers());
 

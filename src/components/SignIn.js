@@ -82,7 +82,7 @@ function SignIn(props) {
   );
 }
 
-function mapStateToProps(users) {
+function mapStateToProps({ users }) {
   console.log("From mapStateToProps", users);
   return {
     users,
