@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { pick } from "lodash";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,8 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import handleReceiveUsers from "../actions/users";
 import { connect } from "react-redux";
+import { setAuthedUser } from "../actions/authedUser";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn(props) {
   const classes = useStyles();
-  const { users } = props;
+  const { users, dispatch } = props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,7 +59,14 @@ function SignIn(props) {
             >
               {Object.keys(users).map((key) => {
                 return (
-                  <MenuItem key={key} value={key} onClick={(e) => alert(key)}>
+                  <MenuItem
+                    key={key}
+                    value={key}
+                    onClick={(e) => {
+                      const settingUser = pick(users, [key]);
+                      dispatch(setAuthedUser(settingUser[key]));
+                    }}
+                  >
                     {key}
                   </MenuItem>
                 );
@@ -82,10 +90,10 @@ function SignIn(props) {
   );
 }
 
-function mapStateToProps({ users }) {
-  console.log("From mapStateToProps", users);
+function mapStateToProps({ users, authedUser }) {
   return {
     users,
+    authedUser,
   };
 }
 

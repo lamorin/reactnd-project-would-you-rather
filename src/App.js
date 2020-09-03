@@ -1,12 +1,25 @@
 import React from "react";
 import SignIn from "./components/SignIn";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div>
-      <SignIn />
-    </div>
-  );
+function App(props) {
+  const { authedUser } = props;
+
+  if (authedUser === null) {
+    return (
+      <div>
+        <SignIn />
+      </div>
+    );
+  }
+
+  return <div>{authedUser.id}</div>;
 }
 
-export default App;
+function mapStateToProps({ authedUser }) {
+  return {
+    authedUser,
+  };
+}
+
+export default connect(mapStateToProps)(App);
