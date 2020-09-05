@@ -3,7 +3,7 @@ import { SET_AUTHED_USER } from "../actions/authedUser";
 const authedUser = {
   id: "sarahedo",
   name: "Sarah Edo",
-  avatarURL: "",
+  avatarURL: "https://picsum.photos/50/50",
   answers: {
     "8xf0y6ziyjabvozdd253nd": "optionOne",
     "6ni6ok3ym7mf1p33lnez": "optionTwo",

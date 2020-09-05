@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MainUI(props) {
-  const { activePanel, children } = props;
+  const { activePanel, children, authedUser } = props;
   const classes = useStyles();
   const preventDefault = (event) => event.preventDefault();
   const handleChange = (event, newValue) => {
@@ -79,12 +79,14 @@ function MainUI(props) {
             <Tab label="Leader Board" {...tabProps(2)} />
           </Tabs>
           <div className={classes.user}>
-            <Typography className={classes.username}>Hello, lamorin</Typography>
+            <Typography className={classes.username}>
+              Hello, {authedUser.id}
+            </Typography>
 
             <Avatar
               className={classes.avatar}
               alt="Remy Sharp"
-              src="https://placekitten.com/640/360"
+              src={authedUser.avatarURL}
             />
 
             <Link
@@ -104,6 +106,7 @@ function MainUI(props) {
 }
 
 function mapStateToProps({ authedUser, activePanel }) {
+  console.log(authedUser);
   return {
     authedUser,
     activePanel,

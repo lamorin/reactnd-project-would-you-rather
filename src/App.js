@@ -2,13 +2,14 @@ import React from "react";
 import SignIn from "./components/SignIn";
 import MainUI from "./components/MainUI";
 import TabPanel from "./components/TabPanel";
+import Home from "./components/Home";
+import NewQuestion from "./components/NewQuestion";
+import LeaderBoard from "./components/LeaderBoard";
 
 import { connect } from "react-redux";
 
 function App(props) {
   const { authedUser, activePanel } = props;
-
-  //const [value, setValue] = React.useState(0);
 
   if (authedUser === null) {
     return (
@@ -20,15 +21,9 @@ function App(props) {
   return (
     <div>
       <MainUI>
-        <TabPanel value={activePanel} index={0}>
-          Home
-        </TabPanel>
-        <TabPanel value={activePanel} index={1}>
-          New Question
-        </TabPanel>
-        <TabPanel value={activePanel} index={2}>
-          Leader Board
-        </TabPanel>
+        <Home></Home>
+        <NewQuestion></NewQuestion>
+        <LeaderBoard></LeaderBoard>
       </MainUI>
     </div>
   );
