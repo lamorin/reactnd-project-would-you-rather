@@ -3,17 +3,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-
 import Avatar from "@material-ui/core/Avatar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { setActivePanel } from "../actions/panels";
+import { connect } from "react-redux";
 
 import { deepOrange } from "@material-ui/core/colors";
 
 import Link from "@material-ui/core/Link";
 
-function a11yProps(index) {
+function tabProps(index) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -57,48 +57,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-export default function NavBar() {
+function MainUI(props) {
+  const { activePanel, children } = props;
   const classes = useStyles();
   const preventDefault = (event) => event.preventDefault();
-
-  const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    const { dispatch } = props;
+    dispatch(setActivePanel(newValue));
   };
-
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position="static">
         <Toolbar className={classes.toolbar}>
           <Tabs
-            value={value}
+            value={activePanel}
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label="Home" {...a11yProps(0)} />
-            <Tab label="New Question" {...a11yProps(1)} />
-            <Tab label="Leader Board" {...a11yProps(2)} />
+            <Tab label="Home" {...tabProps(0)} />
+            <Tab label="New Question" {...tabProps(1)} />
+            <Tab label="Leader Board" {...tabProps(2)} />
           </Tabs>
           <div className={classes.user}>
             <Typography className={classes.username}>Hello, lamorin</Typography>
@@ -120,15 +98,16 @@ export default function NavBar() {
           </div>
         </Toolbar>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        Home
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        New Question
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Leader Board
-      </TabPanel>
+      {children}
     </div>
   );
 }
+
+function mapStateToProps({ authedUser, activePanel }) {
+  return {
+    authedUser,
+    activePanel,
+  };
+}
+
+export default connect(mapStateToProps)(MainUI);
