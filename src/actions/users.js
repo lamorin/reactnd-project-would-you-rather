@@ -1,18 +1,19 @@
-import api from "../helpers/api";
+import { getUsers } from '../utils/api'
 
-export const RECEIVE_USERS = "RECEIVE_USER";
+export const RECEIVE_USERS = 'RECEIVE_USER'
 
 function receiveUsers(users) {
   return {
     type: RECEIVE_USERS,
     users,
-  };
+  }
 }
 
-export default function handleReceiveUsers() {
+export function handleReceiveUsers() {
+  console.log('action/users.js - retrieving users...')
   return (dispatch) => {
-    api.getUsers().then((users) => {
-      dispatch(receiveUsers(users));
-    });
-  };
+    getUsers().then((users) => {
+      dispatch(receiveUsers(users))
+    })
+  }
 }

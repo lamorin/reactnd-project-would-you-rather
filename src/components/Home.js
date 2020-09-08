@@ -1,21 +1,20 @@
-import React from "react";
-import { connect } from "react-redux";
-import TabPanel from "./TabPanel";
+import React from 'react'
+import { connect } from 'react-redux'
+import Container from '@material-ui/core/Container'
+import QuestionsTabs from './QuestionsTabs'
 
 function Home(props) {
-  const { activePanel } = props;
-
   return (
-    <TabPanel value={activePanel} index={0}>
-      Home
-    </TabPanel>
-  );
+    <Container maxWidth="md" align="center">
+      <QuestionsTabs></QuestionsTabs>
+    </Container>
+  )
 }
 
 function mapStateToProps({ activePanel }) {
   return {
     activePanel,
-  };
+  }
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Home)
