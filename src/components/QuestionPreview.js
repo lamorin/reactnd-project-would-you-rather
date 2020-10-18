@@ -10,7 +10,6 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
-import { setSelectedQuestion } from '../actions/selectedQuestion'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function UnansweredQuestion(props) {
-  const { question, dispatch } = props
+  const { question } = props
   const { name, avatarURL } = question
 
   const classes = useStyles()
@@ -66,7 +65,6 @@ function UnansweredQuestion(props) {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={() => dispatch(setSelectedQuestion(question))}
             >
               View full poll
             </Button>

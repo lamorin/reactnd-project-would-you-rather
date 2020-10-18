@@ -10,7 +10,6 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
-import { setSelectedQuestion } from '../actions/selectedQuestion'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,10 +35,18 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(2),
   },
+  scoreArea: {
+    padding: theme.spacing(3),
+  },
+  scoreCircle: {
+    backgroundColor: theme.palette.secondary.main,
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
 }))
 
-function UnansweredQuestion(props) {
-  const { question, dispatch } = props
+function QuestionResults(props) {
+  const { question } = props
   const { name, avatarURL } = question
 
   const classes = useStyles()
@@ -53,23 +60,35 @@ function UnansweredQuestion(props) {
         <Divider></Divider>
         <Grid container>
           <div className={classes.root}>
-            <Avatar alt={name} src={avatarURL} className={classes.large} />
+            <Avatar alt={name} src={avatarURL} className={classes.medium} />
           </div>
           <Divider orientation="vertical" flexItem></Divider>
           <Container
             className={classes.topDivision}
             style={{ margin: '0 auto', width: 'auto' }}
           >
-            <p>Would you rather</p>
+            <p>Results:</p>
             <p>...{question.optionOne.text.substring(0, 1000)}...</p>
             <Button
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={() => dispatch(setSelectedQuestion(question))}
             >
               View full poll
             </Button>
+          </Container>
+          <Divider orientation="vertical" flexItem></Divider>
+          <Container
+            className={classes.topDivision}
+            style={{ margin: '0 auto', width: 'auto' }}
+          >
+            <Paper>
+              <Typography>Score</Typography>
+              <Divider></Divider>
+              <Container className={classes.scoreArea}>
+                <Avatar className={classes.scoreCircle}>{10}</Avatar>
+              </Container>
+            </Paper>
           </Container>
         </Grid>
       </Paper>
@@ -83,4 +102,4 @@ function mapStateToProps({ activePanel }) {
   }
 }
 
-export default connect(mapStateToProps)(UnansweredQuestion)
+export default connect(mapStateToProps)(QuestionResults)
