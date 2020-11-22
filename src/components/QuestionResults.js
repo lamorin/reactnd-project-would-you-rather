@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import LinearProgress from '@material-ui/core/LinearProgress'
+
 import {
   Avatar,
   Divider,
@@ -21,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
+  },
+  medium: {
+    width: theme.spacing(9),
+    height: theme.spacing(9),
   },
   large: {
     width: theme.spacing(15),
@@ -43,52 +49,173 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
+  avatar: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+    margin: theme.spacing(3),
+  },
 }))
 
 function QuestionResults(props) {
-  const { question } = props
-  const { name, avatarURL } = question
+  const { question, authedUser } = props
+  const { authorId, name, avatarURL, optionOne, optionTwo } = question
+
+  console.log('Option One', optionOne)
+  console.log('Option Two', optionTwo)
 
   const classes = useStyles()
+
+  const percentage1 =
+    (optionOne.votes.length * 100) /
+    (optionOne.votes.length + optionTwo.votes.length)
 
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
         <Typography align={'left'} className={classes.topDivision}>
-          {name} asks:
+          {question.name}
         </Typography>
         <Divider></Divider>
         <Grid container>
           <div className={classes.root}>
-            <Avatar alt={name} src={avatarURL} className={classes.medium} />
+            <Avatar alt={name} src={avatarURL} className={classes.avatar} />
           </div>
           <Divider orientation="vertical" flexItem></Divider>
           <Container
             className={classes.topDivision}
-            style={{ margin: '0 auto', width: 'auto' }}
+            style={{ width: '66.66%' }}
           >
-            <p>Results:</p>
-            <p>...{question.optionOne.text.substring(0, 1000)}...</p>
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
+            <Container
+              disableGutters={true}
+              style={{
+                position: 'relative',
+                padding: '0 0.5rem',
+                marginBottom: '1rem',
+                backgroundColor: optionOne.votes.includes(authedUser.id)
+                  ? 'grey'
+                  : 'transparent',
+              }}
             >
-              View full poll
-            </Button>
-          </Container>
-          <Divider orientation="vertical" flexItem></Divider>
-          <Container
-            className={classes.topDivision}
-            style={{ margin: '0 auto', width: 'auto' }}
-          >
-            <Paper>
-              <Typography>Score</Typography>
-              <Divider></Divider>
-              <Container className={classes.scoreArea}>
-                <Avatar className={classes.scoreCircle}>{10}</Avatar>
-              </Container>
-            </Paper>
+              <div
+                style={{
+                  display: true ? 'none' : 'flex',
+                  height: '3rem',
+                  width: '3rem',
+                  backgroundColor: 'red',
+                  position: 'absolute',
+                  right: '-1.5rem',
+                  top: '-1.5rem',
+                  alignItems: 'center',
+                  borderRadius: '50px',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: '0.6rem',
+                    lineHeight: '0.7rem',
+                    width: '100%',
+                  }}
+                >
+                  Your
+                  <br />
+                  Vote
+                </span>
+              </div>
+              <p style={{ textAlign: 'left', marginTop: 0 }}>
+                {optionOne.text}
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  backgroundColor: '#3f51b5',
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: '#f50057',
+                    textAlign: 'right',
+                    fontSize: '1rem',
+                    lineHeight: '1.9rem',
+                    width: `${percentage1}%`,
+                    color: 'white',
+                  }}
+                >
+                  <span style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
+                    {percentage1}%
+                  </span>
+                </div>
+              </div>
+              <p>
+                {optionOne.votes.length} of{' '}
+                {optionOne.votes.length + optionTwo.votes.length}
+              </p>
+            </Container>
+            <Container
+              disableGutters={true}
+              style={{
+                padding: '0 0.5rem',
+                marginTop: '2rem',
+                backgroundColor: optionTwo.votes.includes(authedUser.id)
+                  ? 'grey'
+                  : 'transparent',
+              }}
+            >
+              <div
+                style={{
+                  display: true ? 'none' : 'flex',
+                  height: '3rem',
+                  width: '3rem',
+                  backgroundColor: 'red',
+                  position: 'absolute',
+                  right: '-1.5rem',
+                  top: '-1.5rem',
+                  alignItems: 'center',
+                  borderRadius: '50px',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: '0.6rem',
+                    lineHeight: '0.7rem',
+                    width: '100%',
+                  }}
+                >
+                  Your
+                  <br />
+                  Vote
+                </span>
+              </div>
+              <p style={{ textAlign: 'left', marginTop: 0 }}>
+                {optionTwo.text}
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  backgroundColor: '#3f51b5',
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: '#f50057',
+                    textAlign: 'right',
+                    fontSize: '1rem',
+                    lineHeight: '1.9rem',
+                    width: `${100 - percentage1}%`,
+                    color: 'white',
+                  }}
+                >
+                  <span style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
+                    {100 - percentage1}%
+                  </span>
+                </div>
+              </div>
+              <p>
+                {optionTwo.votes.length} of{' '}
+                {optionOne.votes.length + optionTwo.votes.length}
+              </p>
+            </Container>
           </Container>
         </Grid>
       </Paper>
@@ -96,9 +223,12 @@ function QuestionResults(props) {
   )
 }
 
-function mapStateToProps({ activePanel }) {
+function mapStateToProps({ activePanel, selectedQuestion, authedUser }) {
+  console.log(selectedQuestion)
+  console.log('AUTHED', authedUser)
   return {
     activePanel,
+    authedUser,
   }
 }
 

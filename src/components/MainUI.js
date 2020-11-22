@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import { deepOrange } from '@material-ui/core/colors'
 
 import Link from '@material-ui/core/Link'
+import { setSelectedQuestion } from '../actions/selectedQuestion'
 
 function tabProps(index) {
   return {
@@ -68,6 +69,11 @@ function MainUI(props) {
   const preventDefault = (event) => event.preventDefault()
   const handleChange = (event, newValue) => {
     const { dispatch } = props
+
+    if (newValue === 0) {
+      dispatch(setSelectedQuestion(null))
+    }
+
     dispatch(setActivePanel(newValue))
   }
   return (
@@ -79,7 +85,7 @@ function MainUI(props) {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label="Home" {...tabProps(0)} />
+            <Tab label="Home" {...tabProps(0)}/>
             <Tab label="New Question" {...tabProps(1)} />
             <Tab label="Leader Board" {...tabProps(2)} />
           </Tabs>

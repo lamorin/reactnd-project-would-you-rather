@@ -8,14 +8,22 @@ class Home extends Component {
   render() {
     const { selectedQuestion } = this.props
     console.log(`selelectedQuestion - ${selectedQuestion}`)
-    return (
-      <Container maxWidth="md" align="center">
-        {selectedQuestion === null && <QuestionsTabs />}
-        {selectedQuestion !== null && (
+
+    if (selectedQuestion === null) {
+      return (
+        <Container maxWidth="md" align="center">
+          {selectedQuestion === null && <QuestionsTabs />}
+        </Container>
+      )
+    }
+
+    if (selectedQuestion !== null) {
+      return (
+        <Container maxWidth="md" align="center">
           <QuestionResults question={selectedQuestion} />
-        )}
-      </Container>
-    )
+        </Container>
+      )
+    }
   }
 }
 
