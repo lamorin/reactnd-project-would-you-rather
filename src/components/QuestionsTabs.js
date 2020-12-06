@@ -10,6 +10,7 @@ import { handleReceiveUsers } from '../actions/users'
 import _ from 'lodash'
 import { formatQuestion } from '../utils/helpers'
 import UnansweredQuestion from './UnansweredQuestion'
+import QuestionResults from './QuestionResults'
 
 const useStyles = makeStyles({
   root: {
@@ -90,10 +91,10 @@ function QuestionsTabs(props) {
         </TabPanel>
         <TabPanel value={value} index={1}>
           {answeredQuestions.map((answeredQuestion) => (
-            <UnansweredQuestion
+            <QuestionResults
               key={answeredQuestion.id}
               question={answeredQuestion}
-            ></UnansweredQuestion>
+            ></QuestionResults>
           ))}
         </TabPanel>
       </Paper>

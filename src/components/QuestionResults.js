@@ -154,6 +154,7 @@ function QuestionResults(props) {
             <Container
               disableGutters={true}
               style={{
+                position: 'relative',
                 padding: '0 0.5rem',
                 marginTop: '2rem',
                 backgroundColor: optionTwo.votes.includes(authedUser.id)
@@ -163,7 +164,7 @@ function QuestionResults(props) {
             >
               <div
                 style={{
-                  display: true ? 'none' : 'flex',
+                  display: false? 'none' : 'flex',
                   height: '3rem',
                   width: '3rem',
                   backgroundColor: 'red',

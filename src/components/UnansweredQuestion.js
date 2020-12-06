@@ -2,6 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import FormLabel from '@material-ui/core/FormLabel'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import Radio from '@material-ui/core/Radio'
+import FormHelperText from '@material-ui/core/FormHelperText'
+
 import {
   Avatar,
   Divider,
@@ -44,6 +51,16 @@ function UnansweredQuestion(props) {
 
   const classes = useStyles()
 
+  const handleSubmit = () =>  {}
+
+  const handleRadioChange = () => {}
+
+  const helperText = () => {}
+
+  const error = 'error'
+
+  const value = 'value'
+
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
@@ -60,16 +77,19 @@ function UnansweredQuestion(props) {
             className={classes.topDivision}
             style={{ margin: '0 auto', width: 'auto' }}
           >
-            <p>Would you rather</p>
-            <p>...{question.optionOne.text.substring(0, 1000)}...</p>
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
-              onClick={() => dispatch(setSelectedQuestion(question))}
-            >
-              View full poll
-            </Button>
+            <form onSubmit={handleSubmit}>
+              <FormControl component="fieldset" error={error} className={classes.formControl}>
+                <FormLabel component="legend">Pop quiz: Material-UI is...</FormLabel>
+                <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleRadioChange}>
+                  <FormControlLabel value="best" control={<Radio />} label="The best!" />
+                  <FormControlLabel value="worst" control={<Radio />} label="The worst." />
+                </RadioGroup>
+                <FormHelperText>{helperText}</FormHelperText>
+                <Button type="submit" variant="outlined" color="primary" className={classes.button}>
+                  Check Answer
+                </Button>
+              </FormControl>
+            </form>
           </Container>
         </Grid>
       </Paper>
