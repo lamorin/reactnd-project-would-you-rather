@@ -2,12 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import LinearProgress from '@material-ui/core/LinearProgress'
 
 import {
   Avatar,
   Divider,
-  Button,
   Grid,
   Paper,
   Typography,
@@ -58,10 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 function QuestionResults(props) {
   const { question, authedUser } = props
-  const { authorId, name, avatarURL, optionOne, optionTwo } = question
-
-  console.log('Option One', optionOne)
-  console.log('Option Two', optionTwo)
+  const { name, avatarURL, optionOne, optionTwo } = question
 
   const classes = useStyles()
 
@@ -225,8 +220,7 @@ function QuestionResults(props) {
 }
 
 function mapStateToProps({ activePanel, selectedQuestion, authedUser }) {
-  console.log(selectedQuestion)
-  console.log('AUTHED', authedUser)
+
   return {
     activePanel,
     authedUser,

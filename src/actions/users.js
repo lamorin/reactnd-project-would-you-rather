@@ -10,7 +10,6 @@ function receiveUsers(users) {
 }
 
 export function handleReceiveUsers() {
-  console.log('action/users.js - retrieving users...')
   return (dispatch) => {
     getUsers().then((users) => {
       dispatch(receiveUsers(users))

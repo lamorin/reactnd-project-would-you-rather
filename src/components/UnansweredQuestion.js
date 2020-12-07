@@ -1,3 +1,4 @@
+import {handleSaveQuestionAnswer} from '../actions/questions'
 import React from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
@@ -7,7 +8,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Radio from '@material-ui/core/Radio'
-import FormHelperText from '@material-ui/core/FormHelperText'
 
 import {
   Avatar,
@@ -17,7 +17,6 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
-import { setSelectedQuestion } from '../actions/selectedQuestion'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,20 +45,22 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function UnansweredQuestion(props) {
-  const { question, dispatch } = props
-  const { name, avatarURL } = question
+  const { selectedQuestion, authedUser, dispatch } = props
+  const { name, avatarURL } = selectedQuestion
 
   const classes = useStyles()
 
-  const handleSubmit = () =>  {}
+  const [answer, setValue] = React.useState("optionOne");
 
-  const handleRadioChange = () => {}
+  const handleSubmit = (e) =>  {
+    e.preventDefault()
+    dispatch(handleSaveQuestionAnswer(authedUser.id, selectedQuestion.id, answer))
+  }
 
-  const helperText = () => {}
+  const handleRadioChange = (event) => {
+    setValue(event.target.value)
+  }
 
-  const error = 'error'
-
-  const value = 'value'
 
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
@@ -78,13 +79,12 @@ function UnansweredQuestion(props) {
             style={{ margin: '0 auto', width: 'auto' }}
           >
             <form onSubmit={handleSubmit}>
-              <FormControl component="fieldset" error={error} className={classes.formControl}>
-                <FormLabel component="legend">Pop quiz: Material-UI is...</FormLabel>
-                <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleRadioChange}>
-                  <FormControlLabel value="best" control={<Radio />} label="The best!" />
-                  <FormControlLabel value="worst" control={<Radio />} label="The worst." />
+              <FormControl component="fieldset" error={false} className={classes.formControl}>
+                <FormLabel component="legend">Would you rather...</FormLabel>
+                <RadioGroup aria-label="quiz" name="quiz" value={answer} onChange={handleRadioChange}>
+                  <FormControlLabel value="optionOne" control={<Radio />} label={selectedQuestion.optionOne.text} />
+                  <FormControlLabel value="optionTwo" control={<Radio />} label={selectedQuestion.optionTwo.text}  />
                 </RadioGroup>
-                <FormHelperText>{helperText}</FormHelperText>
                 <Button type="submit" variant="outlined" color="primary" className={classes.button}>
                   Check Answer
                 </Button>
@@ -97,9 +97,10 @@ function UnansweredQuestion(props) {
   )
 }
 
-function mapStateToProps({ activePanel }) {
+function mapStateToProps({ selectedQuestion, authedUser }) {
   return {
-    activePanel,
+    selectedQuestion,
+    authedUser
   }
 }
 

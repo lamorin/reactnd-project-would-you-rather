@@ -7,7 +7,6 @@ import reducers from './reducers/'
 import * as serviceWorker from './serviceWorker'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { setSelectedQuestion } from './actions/selectedQuestion'
 
 const store = createStore(reducers, middleware)
 

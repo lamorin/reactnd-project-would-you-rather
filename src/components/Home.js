@@ -8,7 +8,6 @@ import UnansweredQuestion from './UnansweredQuestion'
 class Home extends Component {
   render() {
     const { selectedQuestion, authedUser } = this.props
-    console.log(`selelectedQuestion - ${selectedQuestion}`)
 
     if (selectedQuestion === null) {
       return (

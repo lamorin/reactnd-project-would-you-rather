@@ -132,6 +132,7 @@ export function _getUsers() {
 }
 
 export function _getQuestions() {
+  console.log("enviando questions")
   return new Promise((res, rej) => {
     setTimeout(() => res({ ...questions }), 1000)
   })

@@ -10,6 +10,7 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
+ import {setSelectedQuestion} from '../actions/selectedQuestion'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,10 +39,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function UnansweredQuestion(props) {
-  const { question } = props
+  const { question, dispatch } = props
   const { name, avatarURL } = question
 
   const classes = useStyles()
+
+  const handleViewPoll = (q) => {
+    dispatch(setSelectedQuestion(q))
+  }
 
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
@@ -65,6 +70,7 @@ function UnansweredQuestion(props) {
               className={classes.button}
               variant="contained"
               color="primary"
+              onClick={() => { handleViewPoll(question) }}
             >
               View full poll
             </Button>
@@ -75,7 +81,7 @@ function UnansweredQuestion(props) {
   )
 }
 
-function mapStateToProps({ activePanel }) {
+function mapStateToProps({ activePanel, selectedQuestion }) {
   return {
     activePanel,
   }

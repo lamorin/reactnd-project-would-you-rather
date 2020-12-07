@@ -9,8 +9,7 @@ import handleReceiveQuestions from '../actions/questions'
 import { handleReceiveUsers } from '../actions/users'
 import _ from 'lodash'
 import { formatQuestion } from '../utils/helpers'
-import UnansweredQuestion from './UnansweredQuestion'
-import QuestionResults from './QuestionResults'
+import QuestionPreview from './QuestionPreview'
 
 const useStyles = makeStyles({
   root: {
@@ -59,7 +58,7 @@ function QuestionsTabs(props) {
   )
 
   const answeredQuestions = formattedQuestions.filter((q) => {
-    console.log(q.optionOne.text, q.optionOne.votes, q.optionOne.votes.includes)
+
     return (
       q.authorId !== authedUser.id &&
       (q.optionOne.votes.includes(authedUser.id) ||
@@ -83,18 +82,18 @@ function QuestionsTabs(props) {
         </Tabs>
         <TabPanel value={value} index={0}>
           {unansweredQuestions.map((unansweredQuestion) => (
-            <UnansweredQuestion
+            <QuestionPreview
               key={unansweredQuestion.id}
               question={unansweredQuestion}
-            ></UnansweredQuestion>
+            ></QuestionPreview>
           ))}
         </TabPanel>
         <TabPanel value={value} index={1}>
           {answeredQuestions.map((answeredQuestion) => (
-            <QuestionResults
+            <QuestionPreview
               key={answeredQuestion.id}
               question={answeredQuestion}
-            ></QuestionResults>
+            ></QuestionPreview>
           ))}
         </TabPanel>
       </Paper>
