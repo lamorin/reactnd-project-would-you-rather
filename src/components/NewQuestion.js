@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { getQuestions, saveQuestion } from '../utils/api'
 import handleReceiveQuestions from '../actions/questions'
 import Container from '@material-ui/core/Container'
+import Paper from '@material-ui/core/Paper'
 import FormControl from '@material-ui/core/FormControl'
 import TabPanel from './TabPanel'
 import TextField from '@material-ui/core/TextField'
@@ -12,11 +13,13 @@ import { showQuestionsTabs } from '../actions/home'
 import { setActivePanel } from '../actions/panels'
 
 const useStyles = makeStyles((theme) => ({
-    container: {
+  container: {
     textAlign: 'center',
-    background: '#fcfcfa',
-    color: '#818078',
-    fontFamily: 'Futura, sans-serif'
+    fontFamily: 'Futura, sans-serif',
+    padding: '1rem'
+  },
+  paper: {
+    padding: '1rem'
   },
   hrText : {
     lineHeight: '1em',
@@ -50,8 +53,18 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#fcfcfa'
     }
   },
+  complete: {
+    padding: '1rem 1rem 0',
+    margin: 0
+  },
+  wouldYou: {
+    margin: '1rem 1rem'
+  },
   button: {
     margin: '1em auto'
+  },
+  textField: {
+
   }
 }))
 
@@ -79,12 +92,13 @@ function NewQuestion(props) {
   return (
     <TabPanel value={activePanel} index={1}>
       <Container maxWidth="sm" align="center" className={classes.container}>
-        <p style={{textAlign:'left'}}>Complete the question:</p>
-        <FormControl>
+        <Paper className={classes.paper}>
+        <p style={{textAlign:'left'}} className={classes.complete}>Complete the question:</p>
+        <FormControl fullWidth>
           <form onSubmit={handleSubmit}>
-            <p style={{textAlign:'left', fontWeight: 'bold'}}>Would your rather...</p>
+            <p style={{textAlign:'left', fontWeight: 'bold'}} className={classes.wouldYou}>Would your rather...</p>
             <div>
-              <TextField id="outlined-basic" size={'small'} fullWidth variant="outlined" onChange={optionOneHandler}/>
+              <TextField id="outlined-basic" size={'small'} fullWidth variant="outlined" onChange={optionOneHandler} className={classes.textField}/>
             </div>
             <hr data-content='OR' className={classes.hrText}/>
             <div>
@@ -95,6 +109,7 @@ function NewQuestion(props) {
             </Button>
           </form>
         </FormControl>
+        </Paper>
       </Container>
     </TabPanel>
   )
