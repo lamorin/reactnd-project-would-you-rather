@@ -1,4 +1,4 @@
-import { getQuestions, saveQuestionAnswer } from '../utils/api'
+import { getQuestions, saveQuestionAnswer, saveQuestion } from '../utils/api'
 import { setSelectedQuestion } from './selectedQuestion'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
@@ -28,6 +28,16 @@ export function handleSaveQuestionAnswer(authedUser, question, answer) {
       .then((questions) => {
         dispatch(setSelectedQuestion(questions[question.id]))
       })
+    })
+  }
+}
+
+
+export function handleSaveQuestion(optionOneText, optionTwoText, authedUser) {
+  return (dispatch) => {
+    saveQuestion({ optionOneText, optionTwoText, authedUser })
+    .then(()=> {
+      getQuestions()
     })
   }
 }
