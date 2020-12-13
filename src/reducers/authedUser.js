@@ -1,6 +1,6 @@
 import { SET_AUTHED_USER } from '../actions/authedUser'
 
-const authedUser = {
+let authedUserf = {
   id: 'sarahedo',
   name: 'Sarah Edo',
   avatarURL: 'https://picsum.photos/50/50',
@@ -13,11 +13,13 @@ const authedUser = {
   questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9'],
 }
 
+//const authedUser = null
+
 export default function users(state = null, action) {
   switch (action.type) {
     case SET_AUTHED_USER:
       return action.user
     default:
-      return authedUser //state
+      return state
   }
 }

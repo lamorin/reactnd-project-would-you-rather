@@ -14,6 +14,7 @@ import { deepOrange } from '@material-ui/core/colors'
 import Link from '@material-ui/core/Link'
 import { setSelectedQuestion } from '../actions/selectedQuestion'
 import { showQuestionsTabs } from '../actions/home'
+import { setAuthedUser } from '../actions/authedUser'
 
 function tabProps(index) {
   return {
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function MainUI(props) {
-  const { activePanel, children, authedUser } = props
+  const { activePanel, children, authedUser, dispatch } = props
   const classes = useStyles()
   const preventDefault = (event) => event.preventDefault()
   const handleChange = (event, newValue) => {
@@ -106,7 +107,7 @@ function MainUI(props) {
             <Link
               href="#"
               className={classes.logout}
-              onClick={preventDefault}
+              onClick={()=>(dispatch(setAuthedUser(null)))}
               color="inherit"
             >
               Logout
