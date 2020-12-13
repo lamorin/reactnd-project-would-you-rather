@@ -27,6 +27,7 @@ class Home extends Component {
             </Container>
             )
         }
+      break
       default:
         if (homeView === null || SHOW_QUESTION_TABS) {
           return (

@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
 function MainUI(props) {
   const { activePanel, children, authedUser, dispatch } = props
   const classes = useStyles()
-  const preventDefault = (event) => event.preventDefault()
   const handleChange = (event, newValue) => {
     const { dispatch } = props
 

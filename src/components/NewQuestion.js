@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getQuestions, saveQuestion } from '../utils/api'
+import { saveQuestion } from '../utils/api'
 import handleReceiveQuestions from '../actions/questions'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
       padding: '0 .5em',
       lineHeight: '1.5em',
       // this is really the only tricky part, you need to specify the background color of the container element...
-      color: '#818078',
       backgroundColor: '#fcfcfa'
     }
   },
