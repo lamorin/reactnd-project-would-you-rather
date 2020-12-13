@@ -28,9 +28,9 @@ function App(props) {
   )
 }
 
-function mapStateToProps({ authedUser, activePanel }) {
+function mapStateToProps({ authedUser }) {
   return {
-    authedUser,
+    authedUser
   }
 }
 

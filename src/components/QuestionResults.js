@@ -137,7 +137,7 @@ function QuestionResults(props) {
                   }}
                 >
                   <span style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
-                    {percentage1}%
+                    {percentage1.toFixed(2)}%
                   </span>
                 </div>
               </div>
@@ -203,7 +203,7 @@ function QuestionResults(props) {
                   }}
                 >
                   <span style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
-                    {100 - percentage1}%
+                    {(100 - percentage1).toFixed(2)}%
                   </span>
                 </div>
               </div>

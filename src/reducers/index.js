@@ -4,6 +4,7 @@ import authedUser from './authedUser'
 import activePanel from './panels'
 import questions from './questions'
 import { selectedQuestion } from './selectedQuestion'
+import { homeView } from './home'
 
 export default combineReducers({
   users,
@@ -11,4 +12,5 @@ export default combineReducers({
   activePanel,
   questions,
   selectedQuestion,
+  homeView,
 })

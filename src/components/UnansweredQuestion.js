@@ -46,21 +46,21 @@ const useStyles = makeStyles((theme) => ({
 
 function UnansweredQuestion(props) {
   const { selectedQuestion, authedUser, dispatch } = props
-  const { name, avatarURL } = selectedQuestion
-
   const classes = useStyles()
-
   const [answer, setValue] = React.useState("optionOne");
+
+  const question = selectedQuestion
+  const { name, avatarURL } = question
 
   const handleSubmit = (e) =>  {
     e.preventDefault()
-    dispatch(handleSaveQuestionAnswer(authedUser.id, selectedQuestion.id, answer))
+    dispatch(handleSaveQuestionAnswer(authedUser.id, question, answer))
+
   }
 
   const handleRadioChange = (event) => {
     setValue(event.target.value)
   }
-
 
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
@@ -82,8 +82,8 @@ function UnansweredQuestion(props) {
               <FormControl component="fieldset" error={false} className={classes.formControl}>
                 <FormLabel component="legend">Would you rather...</FormLabel>
                 <RadioGroup aria-label="quiz" name="quiz" value={answer} onChange={handleRadioChange}>
-                  <FormControlLabel value="optionOne" control={<Radio />} label={selectedQuestion.optionOne.text} />
-                  <FormControlLabel value="optionTwo" control={<Radio />} label={selectedQuestion.optionTwo.text}  />
+                  <FormControlLabel value="optionOne" control={<Radio />} label={question.optionOne.text} />
+                  <FormControlLabel value="optionTwo" control={<Radio />} label={question.optionTwo.text}  />
                 </RadioGroup>
                 <Button type="submit" variant="outlined" color="primary" className={classes.button}>
                   Check Answer
@@ -97,10 +97,11 @@ function UnansweredQuestion(props) {
   )
 }
 
-function mapStateToProps({ selectedQuestion, authedUser }) {
+function mapStateToProps({ selectedQuestion, authedUser, questions }) {
   return {
     selectedQuestion,
-    authedUser
+    authedUser,
+    questions
   }
 }
 

@@ -35,14 +35,9 @@ function QuestionsTabs(props) {
   const { activePanel, dispatch, questions, users, authedUser } = props
 
   useEffect(() => {
-    if (_.isEmpty(questions)) {
-      dispatch(handleReceiveQuestions())
-    }
-
-    if (_.isEmpty(users)) {
-      dispatch(handleReceiveUsers())
-    }
-  })
+    dispatch(handleReceiveQuestions())
+    dispatch(handleReceiveUsers())
+  },[dispatch])
 
   const handleChange = (event, newValue) => {
     setValue(newValue)

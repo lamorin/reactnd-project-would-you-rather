@@ -10,7 +10,8 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
- import {setSelectedQuestion} from '../actions/selectedQuestion'
+ import { setSelectedQuestion } from '../actions/selectedQuestion'
+ import { showQuestion } from '../actions/home'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,7 @@ function UnansweredQuestion(props) {
 
   const handleViewPoll = (q) => {
     dispatch(setSelectedQuestion(q))
+    dispatch(showQuestion())
   }
 
   return (
@@ -81,7 +83,7 @@ function UnansweredQuestion(props) {
   )
 }
 
-function mapStateToProps({ activePanel, selectedQuestion }) {
+function mapStateToProps({ activePanel }) {
   return {
     activePanel,
   }

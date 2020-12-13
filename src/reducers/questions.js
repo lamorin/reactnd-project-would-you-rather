@@ -8,7 +8,7 @@ export default function questions(state = {}, action) {
       const authedUser = action.authedUser
       const qid = action.qid
       const answer = action.answer
-      
+
       return {
         ...state,
         [qid]: {

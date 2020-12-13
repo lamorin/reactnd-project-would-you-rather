@@ -1,5 +1,5 @@
 import { getQuestions, saveQuestionAnswer } from '../utils/api'
-import { selectedQuestion, setSelectedQuestion } from './selectedQuestion'
+import { setSelectedQuestion } from './selectedQuestion'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const SAVE_QUESTION_ANSWER = 'SAVE_QUESTION_ANSWER'
@@ -12,15 +12,6 @@ function receiveQuestions(questions) {
   }
 }
 
-function saveQuestionAnswerLocal(authedUser, qid, answer) {
-  return {
-    type: SAVE_QUESTION_ANSWER_LOCAL,
-    authedUser,
-    qid,
-    answer
-  }
-}
-
 export default function handleReceiveQuestions() {
   return (dispatch) => {
     getQuestions().then((questions) => {
@@ -29,9 +20,14 @@ export default function handleReceiveQuestions() {
   }
 }
 
-export function handleSaveQuestionAnswer(authedUser, qid, answer) {
+export function handleSaveQuestionAnswer(authedUser, question, answer) {
   return (dispatch) => {
-    dispatch(saveQuestionAnswerLocal(authedUser, qid, answer))
-    saveQuestionAnswer({ authedUser, qid, answer }).then(dispatch(handleReceiveQuestions())).then(dispatch(setSelectedQuestion(null)))
+    saveQuestionAnswer({ authedUser, qid : question.id, answer })
+    .then(()=> {
+      getQuestions()
+      .then((questions) => {
+        dispatch(setSelectedQuestion(questions[question.id]))
+      })
+    })
   }
 }

@@ -13,6 +13,7 @@ import { deepOrange } from '@material-ui/core/colors'
 
 import Link from '@material-ui/core/Link'
 import { setSelectedQuestion } from '../actions/selectedQuestion'
+import { showQuestionsTabs } from '../actions/home'
 
 function tabProps(index) {
   return {
@@ -71,10 +72,12 @@ function MainUI(props) {
     const { dispatch } = props
 
     if (newValue === 0) {
-      dispatch(setSelectedQuestion(null))
+      dispatch(showQuestionsTabs())
     }
 
+    dispatch(setSelectedQuestion(null))
     dispatch(setActivePanel(newValue))
+
   }
   return (
     <div className={classes.root}>
