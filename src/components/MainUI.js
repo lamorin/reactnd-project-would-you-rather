@@ -15,6 +15,8 @@ import Link from '@material-ui/core/Link'
 import { setSelectedQuestion } from '../actions/selectedQuestion'
 import { showQuestionsTabs } from '../actions/home'
 import { setAuthedUser } from '../actions/authedUser'
+import {} from '../actions/panels'
+
 
 function tabProps(index) {
   return {
@@ -80,6 +82,12 @@ function MainUI(props) {
     dispatch(setActivePanel(newValue))
 
   }
+
+  const logoutHandler = () => {
+    dispatch(setAuthedUser(null))
+    dispatch(showQuestionsTabs())
+    dispatch(setActivePanel(0))
+  }
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position="static">
@@ -107,7 +115,7 @@ function MainUI(props) {
             <Link
               href="#"
               className={classes.logout}
-              onClick={()=>(dispatch(setAuthedUser(null)))}
+              onClick={logoutHandler}
               color="inherit"
             >
               Logout
