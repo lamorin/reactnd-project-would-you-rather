@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(3),
   },
   large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
+    width: theme.spacing(10),
+    height: theme.spacing(10),
   },
   topDivision: {
     padding: theme.spacing(2),
@@ -57,7 +57,7 @@ function LeaderBoardMember(props) {
       <Paper>
         <Grid container>
           <div className={classes.root}>
-            <Avatar alt={name} src={avatarURL} className={classes.medium} />
+            <Avatar alt={name} src={avatarURL} className={classes.large} />
           </div>
           <Divider orientation="vertical" flexItem></Divider>
           <Container
