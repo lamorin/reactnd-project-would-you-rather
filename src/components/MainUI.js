@@ -73,17 +73,10 @@ const useStyles = makeStyles((theme) => ({
 function MainUI(props) {
   const { activePanel, authedUser, dispatch } = props
   const classes = useStyles()
-  const [value, setValue] = React.useState(0)
   const handleChange = (event, newValue) => {
     const { dispatch } = props
-    setValue(newValue)
-    if (newValue === 0) {
-      dispatch(showQuestionsTabs())
-    }
-
     dispatch(setSelectedQuestion(null))
     dispatch(setActivePanel(newValue))
-
   }
 
   const logoutHandler = () => {
@@ -126,13 +119,13 @@ function MainUI(props) {
           </div>
         </Toolbar>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={activePanel} index={0}>
         <Home></Home>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={activePanel} index={1}>
         <NewQuestion></NewQuestion>
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={activePanel} index={2}>
         <LeaderBoard></LeaderBoard>
       </TabPanel>
     </div>

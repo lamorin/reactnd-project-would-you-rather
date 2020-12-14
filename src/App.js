@@ -1,9 +1,6 @@
 import React from 'react'
 import SignIn from './components/SignIn'
 import MainUI from './components/MainUI'
-import Home from './components/Home'
-import NewQuestion from './components/NewQuestion'
-import LeaderBoard from './components/LeaderBoard'
 
 import { connect } from 'react-redux'
 
