@@ -8,10 +8,12 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { setActivePanel } from '../actions/panels'
 import { connect } from 'react-redux'
-
 import { deepOrange } from '@material-ui/core/colors'
-
 import Link from '@material-ui/core/Link'
+import Home from './Home'
+import NewQuestion from './NewQuestion'
+import LeaderBoard from './LeaderBoard'
+
 import { setSelectedQuestion } from '../actions/selectedQuestion'
 import { showQuestionsTabs } from '../actions/home'
 import { setAuthedUser } from '../actions/authedUser'
@@ -68,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function MainUI(props) {
-  const { activePanel, children, authedUser, dispatch } = props
+  const { activePanel, authedUser, dispatch } = props
   const classes = useStyles()
   const handleChange = (event, newValue) => {
     const { dispatch } = props
@@ -122,7 +124,9 @@ function MainUI(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {children}
+      <Home></Home>
+      <NewQuestion></NewQuestion>
+      <LeaderBoard></LeaderBoard>
     </div>
   )
 }

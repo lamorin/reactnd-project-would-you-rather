@@ -9,7 +9,10 @@ import { SHOW_QUESTION_TABS, SHOW_QUESTION} from '../actions/home'
 class Home extends Component {
   render() {
 
+
     const { homeView, selectedQuestion, authedUser } = this.props
+
+    console.log('homeView: ', homeView)
 
     switch(homeView) {
       case SHOW_QUESTION:
@@ -27,6 +30,12 @@ class Home extends Component {
             </Container>
             )
         }
+
+          return (
+            <Container maxWidth="md" align="center">
+              <QuestionsTabs />
+            </Container>
+          )
       break
       default:
         if (homeView === null || SHOW_QUESTION_TABS) {

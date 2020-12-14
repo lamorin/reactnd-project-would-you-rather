@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import {
@@ -46,18 +47,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function LeaderBoardMember(props) {
-  const { question } = props
-  const { name, avatarURL } = question
+  const { user, createdQuestions, answeredQuestions } = props
+  const { name, avatarURL } = user
 
   const classes = useStyles()
+
+  console.log('rendering Board Member')
 
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
-        <Typography align={'left'} className={classes.topDivision}>
-          {name} asks:
-        </Typography>
-        <Divider></Divider>
         <Grid container>
           <div className={classes.root}>
             <Avatar alt={name} src={avatarURL} className={classes.medium} />
@@ -67,15 +66,26 @@ function LeaderBoardMember(props) {
             className={classes.topDivision}
             style={{ margin: '0 auto', width: 'auto' }}
           >
-            <p>Results:</p>
-            <p>...{question.optionOne.text.substring(0, 1000)}...</p>
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
-            >
-              View full poll
-            </Button>
+
+            <Typography variant={'h6'} align={'left'}  className={classes.topDivision}>
+              {name}
+            </Typography>
+            <div style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between'}}>
+            <Typography variant={'body1'} align={'left'} style={{display: 'block'}} className={classes.topDivision}>
+              Answered Questions
+            </Typography>
+            <Typography variant={'body1'} align={'right'} style={{display: 'block'}} className={classes.topDivision}>
+              {answeredQuestions}
+            </Typography>
+            </div>
+            <div style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between'}}>
+            <Typography  variant={'body1'} align={'left'}  style={{display: 'block'}} className={classes.topDivision}>
+              Created Questions
+            </Typography>
+            <Typography  variant={'body1'} align={'right'} style={{display: 'block'}} className={classes.topDivision}>
+              {createdQuestions}
+            </Typography>
+            </div>
           </Container>
           <Divider orientation="vertical" flexItem></Divider>
           <Container
@@ -86,7 +96,7 @@ function LeaderBoardMember(props) {
               <Typography>Score</Typography>
               <Divider></Divider>
               <Container className={classes.scoreArea}>
-                <Avatar className={classes.scoreCircle}>{10}</Avatar>
+                <Avatar className={classes.scoreCircle}>{answeredQuestions + createdQuestions}</Avatar>
               </Container>
             </Paper>
           </Container>
@@ -96,9 +106,9 @@ function LeaderBoardMember(props) {
   )
 }
 
-function mapStateToProps({ activePanel }) {
+function mapStateToProps({ questions }) {
   return {
-    activePanel,
+
   }
 }
 

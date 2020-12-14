@@ -20,9 +20,7 @@ function App(props) {
   return (
     <div>
       <MainUI>
-        <Home></Home>
-        <NewQuestion></NewQuestion>
-        <LeaderBoard></LeaderBoard>
+
       </MainUI>
     </div>
   )
