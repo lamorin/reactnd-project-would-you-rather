@@ -6,14 +6,12 @@ import Paper from '@material-ui/core/Paper'
 import LeaderBoardMember from './LeaderBoardMember';
 
 function LeaderBoard(props) {
-  const { users, questions, dispatch } = props;
+  const { users, questions } = props;
 
   _.keys(users).map((userId)=>{
     users[userId].createdQuestions = _.keys(questions).filter((key) => (questions[key].author === userId)).length
     users[userId].answeredQuestions = _.keys(questions).filter((key) => questions[key].optionOne.votes.includes(userId) || questions[key].optionTwo.votes.includes(userId)).length
   })
-
-  console.log('rendering LeaderBoard', users)
 
   return (
       <Container maxWidth="md" align="center">

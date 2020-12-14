@@ -11,19 +11,10 @@ function App(props) {
   const { authedUser } = props
 
   if (authedUser === null) {
-    return (
-      <div>
-        <SignIn />
-      </div>
-    )
+    return (<SignIn />)
   }
-  return (
-    <div>
-      <MainUI>
 
-      </MainUI>
-    </div>
-  )
+  return (<MainUI></MainUI>)
 }
 
 function mapStateToProps({ authedUser }) {

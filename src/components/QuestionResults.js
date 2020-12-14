@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     '& > *': {
       margin: theme.spacing(5),
-    },
+    }
   },
   small: {
     width: theme.spacing(3),
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   scoreArea: {
     padding: theme.spacing(3),
+    backgroundColor: '#e6e5e5'
   },
   scoreCircle: {
     backgroundColor: theme.palette.secondary.main,
@@ -86,14 +87,13 @@ function QuestionResults(props) {
                 position: 'relative',
                 padding: '0 0.5rem',
                 marginBottom: '1rem',
-                backgroundColor: optionOne.votes.includes(authedUser.id)
-                  ? 'grey'
-                  : 'transparent',
+                border: '1px solid #e6e5e5',
+                borderRadius: '2px',
               }}
             >
               <div
                 style={{
-                  display: true ? 'none' : 'flex',
+                  display: question.optionOne.votes.includes(authedUser.id) ? 'flex' : 'none',
                   height: '3rem',
                   width: '3rem',
                   backgroundColor: 'red',
@@ -152,14 +152,13 @@ function QuestionResults(props) {
                 position: 'relative',
                 padding: '0 0.5rem',
                 marginTop: '2rem',
-                backgroundColor: optionTwo.votes.includes(authedUser.id)
-                  ? 'grey'
-                  : 'transparent',
+                border: '1px solid #e6e5e5',
+                borderRadius: '2px',
               }}
             >
               <div
                 style={{
-                  display: false? 'none' : 'flex',
+                  display: question.optionTwo.votes.includes(authedUser.id) ? 'flex' : 'none',
                   height: '3rem',
                   width: '3rem',
                   backgroundColor: 'red',
