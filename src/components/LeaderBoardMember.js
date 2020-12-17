@@ -47,11 +47,7 @@ const useStyles = makeStyles((theme) => ({
 function LeaderBoardMember(props) {
   const { user, createdQuestions, answeredQuestions } = props
   const { name, avatarURL } = user
-
   const classes = useStyles()
-
-  console.log('rendering Board Member')
-
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
