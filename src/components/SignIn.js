@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import { setAuthedUser } from '../actions/authedUser'
 import { handleReceiveUsers } from '../actions/users'
 import _ from 'lodash'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 function SignIn(props) {
   const classes = useStyles()
   const { users, dispatch } = props
+  const history = useHistory();
 
   _.isEmpty(users) && dispatch(handleReceiveUsers())
 
@@ -69,6 +71,7 @@ function SignIn(props) {
                     onClick={(e) => {
                       const settingUser = pick(users, [key])
                       dispatch(setAuthedUser(settingUser[key]))
+                      history.push('/')
                     }}
                   >
                     {key}
