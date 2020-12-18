@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
 import { showQuestionsTabs } from '../actions/home'
 import { setActivePanel } from '../actions/panels'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -69,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
 
 function NewQuestion(props) {
   const { activePanel, authedUser, dispatch } = props
+  const history = useHistory();
   const classes = useStyles()
   let optionOneText = ''
   let optionTwoText = ''
@@ -79,6 +81,7 @@ function NewQuestion(props) {
     .then(()=>dispatch(handleReceiveQuestions()))
     dispatch(setActivePanel(0))
     dispatch(showQuestionsTabs())
+    history.push('/')
   }
 
   const optionOneHandler = (e) => {

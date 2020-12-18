@@ -27,6 +27,7 @@ export function handleSaveQuestionAnswer(authedUser, question, answer) {
       getQuestions()
       .then((questions) => {
         dispatch(setSelectedQuestion(questions[question.id]))
+        dispatch(receiveQuestions(questions))
       })
     })
   }
