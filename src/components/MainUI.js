@@ -10,29 +10,24 @@ import { setActivePanel } from '../actions/panels'
 import { connect } from 'react-redux'
 import { deepOrange } from '@material-ui/core/colors'
 import Link from '@material-ui/core/Link'
-import Home from './Home'
-import NewQuestion from './NewQuestion'
-import LeaderBoard from './LeaderBoard'
 
 import { setSelectedQuestion } from '../actions/selectedQuestion'
 import { showQuestionsTabs } from '../actions/home'
 import { setAuthedUser } from '../actions/authedUser'
 import {} from '../actions/panels'
-import TabPanel from './TabPanel'
 
+import { NavLink, withRouter } from "react-router-dom";
 
-function tabProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
-}
+import Routes from "./Routes"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   appBar: { flexFlow: 'row', marginBottom: 50 },
+  selectedTab: {
+    color: theme.palette.getContrastText(deepOrange[500])
+  },
 
   title: {
     flexGrow: 1,
@@ -70,6 +65,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+
+function TabWithLink(props) {
+  const tabProps = {...props};
+  delete tabProps.fullWidth;
+  return (
+    <NavLink to={props.to} style={props.style}>
+      <Tab  label={tabProps.sidebarName} style={tabProps.style}  {...tabProps}/>
+    </NavLink>
+  );
+}
+
 function MainUI(props) {
   const { activePanel, authedUser, dispatch } = props
   const classes = useStyles()
@@ -84,6 +90,7 @@ function MainUI(props) {
     dispatch(showQuestionsTabs())
     dispatch(setActivePanel(0))
   }
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position="static">
@@ -93,9 +100,11 @@ function MainUI(props) {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label="Home" {...tabProps(0)}/>
-            <Tab label="New Question" {...tabProps(1)} />
-            <Tab label="Leader Board" {...tabProps(2)} />
+            {Routes.map((prop, key) => {
+              return (
+                <TabWithLink to={prop.path} className={classes.selectedTab} key={key} label={prop.sidebarName}  onClick={()=>{dispatch(setActivePanel(prop.index)); dispatch(setSelectedQuestion(null))}}/>
+              );
+            })}
           </Tabs>
           <div className={classes.user}>
             <Typography className={classes.username}>
@@ -119,15 +128,7 @@ function MainUI(props) {
           </div>
         </Toolbar>
       </AppBar>
-      <TabPanel value={activePanel} index={0}>
-        <Home></Home>
-      </TabPanel>
-      <TabPanel value={activePanel} index={1}>
-        <NewQuestion></NewQuestion>
-      </TabPanel>
-      <TabPanel value={activePanel} index={2}>
-        <LeaderBoard></LeaderBoard>
-      </TabPanel>
+
     </div>
   )
 }
@@ -139,4 +140,4 @@ function mapStateToProps({ authedUser, activePanel }) {
   }
 }
 
-export default connect(mapStateToProps)(MainUI)
+export default connect(mapStateToProps)(withRouter(MainUI))

@@ -4,6 +4,13 @@ import MainUI from './components/MainUI'
 
 import { connect } from 'react-redux'
 
+import Routes from "./components/Routes"
+
+import {
+  Switch,
+  Route
+} from "react-router-dom";
+
 function App(props) {
   const { authedUser } = props
 
@@ -11,7 +18,20 @@ function App(props) {
     return (<SignIn />)
   }
 
-  return (<MainUI></MainUI>)
+  return (
+   <div>
+    <MainUI>
+
+    </MainUI>
+    <Switch>
+      {Routes.map((route) => (
+          <Route exact path={route.path} key={route.path}>
+            <route.component />
+          </Route>
+        ))}
+      </Switch>
+    </div>
+  )
 }
 
 function mapStateToProps({ authedUser }) {

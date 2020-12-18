@@ -8,12 +8,18 @@ import * as serviceWorker from './serviceWorker'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
+
 const store = createStore(reducers, middleware)
 
 ReactDOM.render(
   //<React.StrictMode>
   <Provider store={store}>
+<Router>
     <App />
+</Router>
   </Provider>,
   //</React.StrictMode>,
   document.getElementById('root')
