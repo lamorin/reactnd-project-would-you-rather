@@ -11,8 +11,6 @@ export const QUESTION_TABS = 'QUESTION_TABS',
   FULL_POLL = 'FULL_POLL'
 
 export function homeUI(state = QUESTION_TABS, action) {
-  console.log('indicador de que esta entrando en el reducer de homeUI')
-  const bidon = ''
   switch (action.type) {
     case SHOW_QUESTION_TABS:
       return QUESTION_TABS

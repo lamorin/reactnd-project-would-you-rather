@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
@@ -11,12 +11,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { setSelectedQuestion } from '../actions/selectedQuestion'
-import {
-  showUnansweredQuestion,
-  showUnansweredQuestionResults,
-  viewFullPoll,
-} from '../actions/homeUI'
-import { selectedQuestion } from '../reducers/selectedQuestion'
+import { viewFullPoll } from '../actions/homeUI'
 
 const useStyles = makeStyles((theme) => ({
   root: {

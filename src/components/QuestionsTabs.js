@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { connect } from 'react-redux'
 import TabPanel from './TabPanel'
-import handleReceiveQuestions from '../actions/questions'
-import { handleReceiveUsers } from '../actions/users'
 import _ from 'lodash'
 import { formatQuestion } from '../utils/helpers'
 import QuestionPreview from './QuestionPreview'
@@ -17,22 +15,10 @@ const useStyles = makeStyles({
   },
 })
 
-const formatQuestions = (questions, users) => {
-  if (_.isEmpty(users) || _.isEmpty(questions)) {
-    return []
-  }
-
-  const formattedQuestions = _.values(questions).map((q) =>
-    formatQuestion(q, users[q.author])
-  )
-
-  return formattedQuestions
-}
-
 function QuestionsTabs(props) {
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
-  const { authedUserId, users, questions, activeTab, dispatch } = props
+  const { authedUserId, users, questions, activeTab } = props
 
   const handleChange = (event, newValue) => {
     setValue(newValue)

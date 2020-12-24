@@ -9,18 +9,6 @@ export function showUnansweredQuestionsTabs() {
   }
 }
 
-export function showUnansweredQuestion() {
-  return {
-    type: SHOW_UNANSWERED_QUESTION,
-  }
-}
-
-export function showUnansweredQuestionResults() {
-  return {
-    type: SHOW_QUESTION_RESULTS,
-  }
-}
-
 export function viewFullPoll() {
   return {
     type: VIEW_FULL_POLL,

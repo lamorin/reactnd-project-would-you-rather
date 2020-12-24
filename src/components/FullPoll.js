@@ -1,4 +1,3 @@
-import { has } from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 import QuestionResults from './QuestionResults'

@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Radio from '@material-ui/core/Radio'
 import { addAnswerUser } from '../actions/users'
-
+import { viewFullPoll } from '../actions/homeUI'
 import {
   Avatar,
   Divider,
@@ -18,8 +18,6 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
-import { showUnansweredQuestionResults, viewFullPoll } from '../actions/homeUI'
-import { setSelectedQuestionId } from '../actions/questions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
