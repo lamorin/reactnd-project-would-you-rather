@@ -1,5 +1,4 @@
 import React from 'react'
-import { pick } from 'lodash'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -10,10 +9,9 @@ import Container from '@material-ui/core/Container'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import { connect } from 'react-redux'
-import { setAuthedUser } from '../actions/authedUser'
+import { setAuthedUserId } from '../actions/authedUserId'
 import { handleReceiveUsers } from '../actions/users'
 import _ from 'lodash'
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 function SignIn(props) {
   const classes = useStyles()
   const { users, dispatch } = props
-  const history = useHistory();
 
   _.isEmpty(users) && dispatch(handleReceiveUsers())
 
@@ -69,9 +66,7 @@ function SignIn(props) {
                     key={key}
                     value={key}
                     onClick={(e) => {
-                      const settingUser = pick(users, [key])
-                      dispatch(setAuthedUser(settingUser[key]))
-                      history.push('/')
+                      dispatch(setAuthedUserId(key))
                     }}
                   >
                     {key}
@@ -97,10 +92,10 @@ function SignIn(props) {
   )
 }
 
-function mapStateToProps({ users, authedUser }) {
+function mapStateToProps({ users, authedUserId }) {
   return {
     users,
-    authedUser,
+    authedUserId,
   }
 }
 

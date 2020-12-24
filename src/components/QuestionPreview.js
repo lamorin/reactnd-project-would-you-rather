@@ -10,8 +10,11 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
- import { setSelectedQuestion } from '../actions/selectedQuestion'
- import { showQuestion } from '../actions/home'
+import { setSelectedQuestion } from '../actions/selectedQuestion'
+import {
+  showUnansweredQuestion,
+  showUnansweredQuestionResults,
+} from '../actions/home'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,27 +42,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function UnansweredQuestion(props) {
-  const { question, dispatch } = props
-  const { name, avatarURL } = question
-
+function QuestionPreview(props) {
+  const { question, authedUserId, dispatch } = props
   const classes = useStyles()
-
   const handleViewPoll = (q) => {
-    dispatch(setSelectedQuestion(q))
-    dispatch(showQuestion())
+    dispatch(setSelectedQuestion(q.id))
+    if (
+      question.optionOne.votes.includes(authedUserId.id) ||
+      question.optionTwo.votes.includes(authedUserId.id)
+    ) {
+      dispatch(showUnansweredQuestionResults())
+    } else {
+      dispatch(showUnansweredQuestion())
+    }
   }
 
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
         <Typography align={'left'} className={classes.topDivision}>
-          {name} asks:
+          {question.name} asks:
         </Typography>
         <Divider></Divider>
         <Grid container>
           <div className={classes.root}>
-            <Avatar alt={name} src={avatarURL} className={classes.large} />
+            <Avatar
+              alt={question.author}
+              src={question.avatarURL}
+              className={classes.large}
+            />
           </div>
           <Divider orientation="vertical" flexItem></Divider>
           <Container
@@ -72,7 +83,9 @@ function UnansweredQuestion(props) {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={() => { handleViewPoll(question) }}
+              onClick={() => {
+                handleViewPoll(question)
+              }}
             >
               View full poll
             </Button>
@@ -83,10 +96,11 @@ function UnansweredQuestion(props) {
   )
 }
 
-function mapStateToProps({ activePanel }) {
+function mapStateToProps({ activeTab, authedUserId }) {
   return {
-    activePanel,
+    activeTab,
+    authedUserId,
   }
 }
 
-export default connect(mapStateToProps)(UnansweredQuestion)
+export default connect(mapStateToProps)(QuestionPreview)

@@ -6,19 +6,17 @@ import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import { setActivePanel } from '../actions/panels'
+import { setActiveTab } from '../actions/panels'
 import { connect } from 'react-redux'
 import { deepOrange } from '@material-ui/core/colors'
 import Link from '@material-ui/core/Link'
-
-import { setSelectedQuestion } from '../actions/selectedQuestion'
-import { showQuestionsTabs } from '../actions/home'
-import { setAuthedUser } from '../actions/authedUser'
+import { showUnansweredQuestionsTabs } from '../actions/home'
+import { setAuthedUserId } from '../actions/authedUserId'
 import {} from '../actions/panels'
 
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink, withRouter } from 'react-router-dom'
 
-import Routes from "./Routes"
+import Routes from '../Routes'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: { flexFlow: 'row', marginBottom: 50 },
   selectedTab: {
-    color: theme.palette.getContrastText(deepOrange[500])
+    color: theme.palette.getContrastText(deepOrange[500]),
   },
 
   title: {
@@ -65,50 +63,78 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-
 function TabWithLink(props) {
-  const tabProps = {...props};
-  delete tabProps.fullWidth;
+  const tabProps = { ...props }
+  delete tabProps.fullWidth
   return (
     <NavLink to={props.to} style={props.style}>
-      <Tab  label={tabProps.sidebarName} style={tabProps.style}  {...tabProps}/>
+      <Tab label={tabProps.sidebarName} style={tabProps.style} {...tabProps} />
     </NavLink>
-  );
+  )
 }
 
 function MainUI(props) {
-  const { activePanel, authedUser, dispatch } = props
+  const { activeTab, authedUserId, users, dispatch } = props
   const classes = useStyles()
-  const handleChange = (event, newValue) => {
+
+  const handleClickOnTab = (event, newValue) => {
     const { dispatch } = props
-    dispatch(setSelectedQuestion(null))
-    dispatch(setActivePanel(newValue))
+    //dispatch(setSelectedQuestion(null))
+    dispatch(setActiveTab(newValue))
   }
 
   const logoutHandler = () => {
-    dispatch(setAuthedUser(null))
-    dispatch(showQuestionsTabs())
-    dispatch(setActivePanel(0))
+    dispatch(setAuthedUserId(null))
+    dispatch(showUnansweredQuestionsTabs())
+    dispatch(setActiveTab(0))
   }
+
+  const authedUser = users[authedUserId]
 
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position="static">
         <Toolbar className={classes.toolbar}>
           <Tabs
-            value={activePanel}
-            onChange={handleChange}
+            value={activeTab}
+            onChange={handleClickOnTab}
             aria-label="simple tabs example"
           >
             {Routes.map((prop, key) => {
+              if (prop.index === 3) {
+                return (
+                  <TabWithLink
+                    style={{ display: 'none' }}
+                    to={prop.path}
+                    className={classes.selectedTab}
+                    key={key}
+                    label={prop.sidebarName}
+                    onClick={() => {
+                      dispatch(setActiveTab(prop.index))
+                      dispatch(showUnansweredQuestionsTabs())
+                      //dispatch(setSelectedQuestion(null))
+                    }}
+                  />
+                )
+              }
               return (
-                <TabWithLink to={prop.path} className={classes.selectedTab} key={key} label={prop.sidebarName}  onClick={()=>{dispatch(setActivePanel(prop.index)); dispatch(setSelectedQuestion(null))}}/>
-              );
+                <TabWithLink
+                  to={prop.path}
+                  className={classes.selectedTab}
+                  key={key}
+                  label={prop.sidebarName}
+                  onClick={() => {
+                    dispatch(setActiveTab(prop.index))
+                    dispatch(showUnansweredQuestionsTabs())
+                    //dispatch(setSelectedQuestion(null))
+                  }}
+                />
+              )
             })}
           </Tabs>
           <div className={classes.user}>
             <Typography className={classes.username}>
-              Hello, {authedUser.id}
+              Hello, {authedUser.name}
             </Typography>
 
             <Avatar
@@ -128,15 +154,15 @@ function MainUI(props) {
           </div>
         </Toolbar>
       </AppBar>
-
     </div>
   )
 }
 
-function mapStateToProps({ authedUser, activePanel }) {
+function mapStateToProps({ authedUserId, users, activeTab }) {
   return {
-    authedUser,
-    activePanel,
+    authedUserId,
+    users,
+    activeTab,
   }
 }
 

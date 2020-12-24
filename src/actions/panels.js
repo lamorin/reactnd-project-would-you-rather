@@ -1,8 +1,8 @@
-export const SET_ACTIVE_PANEL = "SET_ACTIVE_PANEL";
+export const SET_ACTIVE_TAB = 'SET_ACTIVE_TAB'
 
-export function setActivePanel(panel) {
+export function setActiveTab(panel) {
   return {
-    type: SET_ACTIVE_PANEL,
+    type: SET_ACTIVE_TAB,
     panel,
-  };
+  }
 }

@@ -32,12 +32,12 @@ const formatQuestions = (questions, users) => {
 function QuestionsTabs(props) {
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
-  const { activePanel, dispatch, questions, users, authedUser } = props
+  const { authedUserId, users, questions, activeTab, dispatch } = props
 
   useEffect(() => {
     dispatch(handleReceiveQuestions())
     dispatch(handleReceiveUsers())
-  },[dispatch])
+  }, [dispatch])
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -47,22 +47,21 @@ function QuestionsTabs(props) {
 
   const unansweredQuestions = formattedQuestions.filter(
     (q) =>
-      !q.optionOne.votes.includes(authedUser.id) &&
-      !q.optionTwo.votes.includes(authedUser.id) &&
-      q.authorId !== authedUser.id
+      !q.optionOne.votes.includes(authedUserId.id) &&
+      !q.optionTwo.votes.includes(authedUserId.id) &&
+      q.authorId !== authedUserId.id
   )
 
   const answeredQuestions = formattedQuestions.filter((q) => {
-
     return (
-      q.authorId !== authedUser.id &&
-      (q.optionOne.votes.includes(authedUser.id) ||
-        q.optionTwo.votes.includes(authedUser.id))
+      q.authorId !== authedUserId.id &&
+      (q.optionOne.votes.includes(authedUserId.id) ||
+        q.optionTwo.votes.includes(authedUserId.id))
     )
   })
 
   return (
-    <TabPanel value={activePanel} index={0}>
+    <TabPanel value={activeTab} index={0}>
       <Paper square className={classes.root}>
         <Tabs
           value={value}
@@ -96,12 +95,12 @@ function QuestionsTabs(props) {
   )
 }
 
-function mapStateToProps({ activePanel, questions, authedUser, users }) {
+function mapStateToProps({ users, questions, authedUserId, activeTab }) {
   return {
-    activePanel,
-    questions,
     users,
-    authedUser,
+    questions,
+    authedUserId,
+    activeTab,
   }
 }
 

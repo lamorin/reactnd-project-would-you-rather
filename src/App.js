@@ -4,27 +4,31 @@ import MainUI from './components/MainUI'
 
 import { connect } from 'react-redux'
 
-import Routes from "./components/Routes"
+import Routes from './Routes'
 
-import {
-  Switch,
-  Route
-} from "react-router-dom";
+import { setActiveTab } from './actions/panels'
+import handleReceiveQuestions from './actions/questions'
+
+import { Switch, Route } from 'react-router-dom'
 
 function App(props) {
-  const { authedUser } = props
+  const { authedUserId, dispatch } = props
 
-  if (authedUser === null) {
-    return (<SignIn />)
+  dispatch(handleReceiveQuestions())
+
+  if (authedUserId === null) {
+    return <SignIn />
+  }
+
+  if (window.location.pathname === '/add') {
+    dispatch(setActiveTab(1))
   }
 
   return (
-   <div>
-    <MainUI>
-
-    </MainUI>
-    <Switch>
-      {Routes.map((route) => (
+    <div>
+      <MainUI></MainUI>
+      <Switch>
+        {Routes.map((route) => (
           <Route exact path={route.path} key={route.path}>
             <route.component />
           </Route>
@@ -34,9 +38,9 @@ function App(props) {
   )
 }
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUserId }) {
   return {
-    authedUser
+    authedUserId,
   }
 }
 

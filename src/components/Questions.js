@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import _ from 'lodash'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
-import LeaderBoardMember from './LeaderBoardMember';
+import { formatQuestion } from '../utils/helpers'
+import QuestionPreview from './QuestionPreview'
 
-function LeaderBoard(props) {
+function Questions(props) {
   const { users, questions } = props;
 
   _.keys(users).map((userId)=>{
@@ -14,10 +15,12 @@ function LeaderBoard(props) {
     return users[userId]
   })
 
+  const formattedQuestions = _.values(questions).map((q) => formatQuestion(q, users[q.author]))
+
   return (
       <Container maxWidth="md" align="center">
         <Paper style={{padding: '2rem'}}>
-          { _.uniq(_.reverse(_.sortBy(_.values(users), (user) => (user.createdQuestions + user.answeredQuestions)))).map((user)=>(<LeaderBoardMember key={user.id} user={user} createdQuestions={user.createdQuestions} answeredQuestions={user.answeredQuestions}></LeaderBoardMember>)) }
+          { formattedQuestions.map((q) => <QuestionPreview key={q.id} question={q}></QuestionPreview>) }
         </Paper>
       </Container>
   );
@@ -30,4 +33,4 @@ function mapStateToProps({ users, questions }) {
   };
 }
 
-export default connect(mapStateToProps)(LeaderBoard);
+export default connect(mapStateToProps)(Questions);

@@ -1,4 +1,4 @@
-import {handleSaveQuestionAnswer} from '../actions/questions'
+import { handleSaveQuestionAnswer } from '../actions/questions'
 import React from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,6 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Radio from '@material-ui/core/Radio'
+import { addAnswerUser } from '../actions/users'
 
 import {
   Avatar,
@@ -17,6 +18,8 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
+import { showUnansweredQuestionResults } from '../actions/home'
+import { setSelectedQuestion } from '../actions/selectedQuestion'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,17 +48,25 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function UnansweredQuestion(props) {
-  const { selectedQuestion, authedUser, dispatch } = props
+  const { selectedQuestion, authedUserId, questions, dispatch } = props
   const classes = useStyles()
-  const [answer, setValue] = React.useState("optionOne");
-
+  const [option, setValue] = React.useState('optionOne')
   const question = selectedQuestion
   const { name, avatarURL } = question
 
-  const handleSubmit = (e) =>  {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(handleSaveQuestionAnswer(authedUser.id, question, answer))
+    dispatch(
+      handleSaveQuestionAnswer(authedUserId.id, selectedQuestion.id, option)
+    )
+    dispatch(addAnswerUser(authedUserId.id, selectedQuestion.id, option))
 
+    setTimeout(
+      () => dispatch(setSelectedQuestion(questions[selectedQuestion.id])),
+      0
+    )
+
+    dispatch(showUnansweredQuestionResults())
   }
 
   const handleRadioChange = (event) => {
@@ -79,13 +90,35 @@ function UnansweredQuestion(props) {
             style={{ margin: '0 auto', width: 'auto' }}
           >
             <form onSubmit={handleSubmit}>
-              <FormControl component="fieldset" error={false} className={classes.formControl}>
+              <FormControl
+                component="fieldset"
+                error={false}
+                className={classes.formControl}
+              >
                 <FormLabel component="legend">Would you rather...</FormLabel>
-                <RadioGroup aria-label="quiz" name="quiz" value={answer} onChange={handleRadioChange}>
-                  <FormControlLabel value="optionOne" control={<Radio />} label={question.optionOne.text} />
-                  <FormControlLabel value="optionTwo" control={<Radio />} label={question.optionTwo.text}  />
+                <RadioGroup
+                  aria-label="quiz"
+                  name="quiz"
+                  value={option}
+                  onChange={handleRadioChange}
+                >
+                  <FormControlLabel
+                    value="optionOne"
+                    control={<Radio />}
+                    label={question.optionOne.text}
+                  />
+                  <FormControlLabel
+                    value="optionTwo"
+                    control={<Radio />}
+                    label={question.optionTwo.text}
+                  />
                 </RadioGroup>
-                <Button type="submit" variant="outlined" color="primary" className={classes.button}>
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                >
                   Check Answer
                 </Button>
               </FormControl>
@@ -97,11 +130,12 @@ function UnansweredQuestion(props) {
   )
 }
 
-function mapStateToProps({ selectedQuestion, authedUser, questions }) {
+function mapStateToProps({ selectedQuestion, authedUserId, questions, users }) {
   return {
     selectedQuestion,
-    authedUser,
-    questions
+    authedUserId,
+    questions,
+    users,
   }
 }
 

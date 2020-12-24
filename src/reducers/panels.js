@@ -1,10 +1,10 @@
-import { SET_ACTIVE_PANEL } from "../actions/panels";
+import { SET_ACTIVE_TAB } from '../actions/panels'
 
 export default function users(state = 0, action) {
   switch (action.type) {
-    case SET_ACTIVE_PANEL:
-      return action.panel;
+    case SET_ACTIVE_TAB:
+      return action.panel
     default:
-      return state;
+      return state
   }
 }

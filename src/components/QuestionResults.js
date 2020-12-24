@@ -2,21 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import { formatQuestion } from '../utils/helpers'
 
-import {
-  Avatar,
-  Divider,
-  Grid,
-  Paper,
-  Typography,
-} from '@material-ui/core'
+import { Avatar, Divider, Grid, Paper, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     '& > *': {
       margin: theme.spacing(5),
-    }
+    },
   },
   small: {
     width: theme.spacing(3),
@@ -41,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   scoreArea: {
     padding: theme.spacing(3),
-    backgroundColor: '#e6e5e5'
+    backgroundColor: '#e6e5e5',
   },
   scoreCircle: {
     backgroundColor: theme.palette.secondary.main,
@@ -56,8 +51,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function QuestionResults(props) {
-  const { question, authedUser } = props
-  const { name, avatarURL, optionOne, optionTwo } = question
+  const { users, questions, authedUserId, selectedQuestion } = props
+  const { name, optionOne, optionTwo } = selectedQuestion
+
+  const formattedSelectedQuestion = formatQuestion(
+    questions[selectedQuestion.id],
+    users[questions[selectedQuestion.id].author]
+  )
 
   const classes = useStyles()
 
@@ -69,12 +69,16 @@ function QuestionResults(props) {
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
         <Typography align={'left'} className={classes.topDivision}>
-          {question.name}
+          {name}
         </Typography>
         <Divider></Divider>
         <Grid container>
           <div className={classes.root}>
-            <Avatar alt={name} src={avatarURL} className={classes.avatar} />
+            <Avatar
+              alt={formattedSelectedQuestion.name}
+              src={formattedSelectedQuestion.avatarURL}
+              className={classes.avatar}
+            />
           </div>
           <Divider orientation="vertical" flexItem></Divider>
           <Container
@@ -93,7 +97,11 @@ function QuestionResults(props) {
             >
               <div
                 style={{
-                  display: question.optionOne.votes.includes(authedUser.id) ? 'flex' : 'none',
+                  display: formattedSelectedQuestion.optionOne.votes.includes(
+                    authedUserId.id
+                  )
+                    ? 'flex'
+                    : 'none',
                   height: '3rem',
                   width: '3rem',
                   backgroundColor: 'red',
@@ -137,13 +145,14 @@ function QuestionResults(props) {
                   }}
                 >
                   <span style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
-                    {percentage1.toFixed(2)}%
+                    {percentage1.toFixed(0)}%
                   </span>
                 </div>
               </div>
               <p>
-                {optionOne.votes.length} of{' '}
-                {optionOne.votes.length + optionTwo.votes.length}
+                {formattedSelectedQuestion.optionOne.votes.length} of{' '}
+                {formattedSelectedQuestion.optionOne.votes.length +
+                  formattedSelectedQuestion.optionTwo.votes.length}
               </p>
             </Container>
             <Container
@@ -158,7 +167,11 @@ function QuestionResults(props) {
             >
               <div
                 style={{
-                  display: question.optionTwo.votes.includes(authedUser.id) ? 'flex' : 'none',
+                  display: formattedSelectedQuestion.optionTwo.votes.includes(
+                    authedUserId.id
+                  )
+                    ? 'flex'
+                    : 'none',
                   height: '3rem',
                   width: '3rem',
                   backgroundColor: 'red',
@@ -202,13 +215,14 @@ function QuestionResults(props) {
                   }}
                 >
                   <span style={{ paddingRight: '1rem', paddingLeft: '1rem' }}>
-                    {(100 - percentage1).toFixed(2)}%
+                    {(100 - percentage1).toFixed(0)}%
                   </span>
                 </div>
               </div>
               <p>
-                {optionTwo.votes.length} of{' '}
-                {optionOne.votes.length + optionTwo.votes.length}
+                {formattedSelectedQuestion.optionTwo.votes.length} of{' '}
+                {formattedSelectedQuestion.optionOne.votes.length +
+                  formattedSelectedQuestion.optionTwo.votes.length}
               </p>
             </Container>
           </Container>
@@ -218,11 +232,19 @@ function QuestionResults(props) {
   )
 }
 
-function mapStateToProps({ activePanel, selectedQuestion, authedUser }) {
-
+function mapStateToProps({
+  users,
+  activeTab,
+  selectedQuestion,
+  authedUserId,
+  questions,
+}) {
   return {
-    activePanel,
-    authedUser,
+    users,
+    activeTab,
+    authedUserId,
+    selectedQuestion,
+    questions,
   }
 }
 
