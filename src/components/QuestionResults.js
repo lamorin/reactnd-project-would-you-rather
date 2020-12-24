@@ -51,32 +51,32 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function QuestionResults(props) {
-  const { users, questions, authedUserId, selectedQuestion } = props
-  const { name, optionOne, optionTwo } = selectedQuestion
+  const { users, questions, authedUserId, selectedQuestionId } = props
 
-  const formattedSelectedQuestion = formatQuestion(
-    questions[selectedQuestion.id],
-    users[questions[selectedQuestion.id].author]
-  )
+  const question = questions[selectedQuestionId]
+  const author = users[question.author]
+
+  const formattedQuestion = formatQuestion(question, author)
 
   const classes = useStyles()
 
   const percentage1 =
-    (optionOne.votes.length * 100) /
-    (optionOne.votes.length + optionTwo.votes.length)
+    (formattedQuestion.optionOne.votes.length * 100) /
+    (formattedQuestion.optionOne.votes.length +
+      formattedQuestion.optionTwo.votes.length)
 
   return (
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
         <Typography align={'left'} className={classes.topDivision}>
-          {name}
+          {author.name}
         </Typography>
         <Divider></Divider>
         <Grid container>
           <div className={classes.root}>
             <Avatar
-              alt={formattedSelectedQuestion.name}
-              src={formattedSelectedQuestion.avatarURL}
+              alt={formattedQuestion.name}
+              src={formattedQuestion.avatarURL}
               className={classes.avatar}
             />
           </div>
@@ -97,7 +97,7 @@ function QuestionResults(props) {
             >
               <div
                 style={{
-                  display: formattedSelectedQuestion.optionOne.votes.includes(
+                  display: formattedQuestion.optionOne.votes.includes(
                     authedUserId.id
                   )
                     ? 'flex'
@@ -125,7 +125,7 @@ function QuestionResults(props) {
                 </span>
               </div>
               <p style={{ textAlign: 'left', marginTop: 0 }}>
-                {optionOne.text}
+                {formattedQuestion.optionOne.text}
               </p>
               <div
                 style={{
@@ -150,9 +150,9 @@ function QuestionResults(props) {
                 </div>
               </div>
               <p>
-                {formattedSelectedQuestion.optionOne.votes.length} of{' '}
-                {formattedSelectedQuestion.optionOne.votes.length +
-                  formattedSelectedQuestion.optionTwo.votes.length}
+                {formattedQuestion.optionOne.votes.length} of{' '}
+                {formattedQuestion.optionOne.votes.length +
+                  formattedQuestion.optionTwo.votes.length}
               </p>
             </Container>
             <Container
@@ -167,7 +167,7 @@ function QuestionResults(props) {
             >
               <div
                 style={{
-                  display: formattedSelectedQuestion.optionTwo.votes.includes(
+                  display: formattedQuestion.optionTwo.votes.includes(
                     authedUserId.id
                   )
                     ? 'flex'
@@ -195,7 +195,7 @@ function QuestionResults(props) {
                 </span>
               </div>
               <p style={{ textAlign: 'left', marginTop: 0 }}>
-                {optionTwo.text}
+                {formattedQuestion.optionTwo.text}
               </p>
               <div
                 style={{
@@ -220,9 +220,9 @@ function QuestionResults(props) {
                 </div>
               </div>
               <p>
-                {formattedSelectedQuestion.optionTwo.votes.length} of{' '}
-                {formattedSelectedQuestion.optionOne.votes.length +
-                  formattedSelectedQuestion.optionTwo.votes.length}
+                {formattedQuestion.optionTwo.votes.length} of{' '}
+                {formattedQuestion.optionOne.votes.length +
+                  formattedQuestion.optionTwo.votes.length}
               </p>
             </Container>
           </Container>
@@ -235,7 +235,7 @@ function QuestionResults(props) {
 function mapStateToProps({
   users,
   activeTab,
-  selectedQuestion,
+  selectedQuestionId,
   authedUserId,
   questions,
 }) {
@@ -243,7 +243,7 @@ function mapStateToProps({
     users,
     activeTab,
     authedUserId,
-    selectedQuestion,
+    selectedQuestionId,
     questions,
   }
 }

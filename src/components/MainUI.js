@@ -10,7 +10,7 @@ import { setActiveTab } from '../actions/panels'
 import { connect } from 'react-redux'
 import { deepOrange } from '@material-ui/core/colors'
 import Link from '@material-ui/core/Link'
-import { showUnansweredQuestionsTabs } from '../actions/home'
+import { showUnansweredQuestionsTabs } from '../actions/homeUI'
 import { setAuthedUserId } from '../actions/authedUserId'
 import {} from '../actions/panels'
 

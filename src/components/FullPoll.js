@@ -7,6 +7,8 @@ import UnansweredQuestion from './UnansweredQuestion'
 function FullPoll(props) {
   const { selectedQuestionId, questions, authedUserId } = props
 
+  console.log('PROPS: ', props)
+
   const question = questions[selectedQuestionId]
 
   const hasBeenAnsweredByAuthedUser =
@@ -22,7 +24,7 @@ function FullPoll(props) {
   return componentToReturn
 }
 
-function mapStateToProps(selectedQuestionId, questions, authedUserId) {
+function mapStateToProps({ selectedQuestionId, questions, authedUserId }) {
   return { selectedQuestionId, questions, authedUserId }
 }
 

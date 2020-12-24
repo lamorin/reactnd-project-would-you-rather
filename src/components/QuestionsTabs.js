@@ -34,31 +34,25 @@ function QuestionsTabs(props) {
   const [value, setValue] = React.useState(0)
   const { authedUserId, users, questions, activeTab, dispatch } = props
 
-  useEffect(() => {
-    dispatch(handleReceiveQuestions())
-    dispatch(handleReceiveUsers())
-  }, [dispatch])
-
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
-  const formattedQuestions = formatQuestions(questions, users)
-
-  const unansweredQuestions = formattedQuestions.filter(
-    (q) =>
-      !q.optionOne.votes.includes(authedUserId.id) &&
-      !q.optionTwo.votes.includes(authedUserId.id) &&
-      q.authorId !== authedUserId.id
-  )
-
-  const answeredQuestions = formattedQuestions.filter((q) => {
-    return (
-      q.authorId !== authedUserId.id &&
-      (q.optionOne.votes.includes(authedUserId.id) ||
-        q.optionTwo.votes.includes(authedUserId.id))
+  const unansweredQuestions = _.values(questions)
+    .filter(
+      (q) =>
+        !q.optionOne.votes.includes(authedUserId) &&
+        !q.optionTwo.votes.includes(authedUserId)
     )
-  })
+    .map((q) => formatQuestion(q, users[q.author]))
+
+  const answeredQuestions = _.values(questions)
+    .filter(
+      (q) =>
+        q.optionOne.votes.includes(authedUserId) ||
+        q.optionTwo.votes.includes(authedUserId)
+    )
+    .map((q) => formatQuestion(q, users[q.author]))
 
   return (
     <TabPanel value={activeTab} index={0}>

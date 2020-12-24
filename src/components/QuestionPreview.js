@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
@@ -14,7 +14,9 @@ import { setSelectedQuestion } from '../actions/selectedQuestion'
 import {
   showUnansweredQuestion,
   showUnansweredQuestionResults,
-} from '../actions/home'
+  viewFullPoll,
+} from '../actions/homeUI'
+import { selectedQuestion } from '../reducers/selectedQuestion'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,18 +45,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function QuestionPreview(props) {
-  const { question, authedUserId, dispatch } = props
+  const { question, dispatch } = props
   const classes = useStyles()
-  const handleViewPoll = (q) => {
-    dispatch(setSelectedQuestion(q.id))
-    if (
-      question.optionOne.votes.includes(authedUserId.id) ||
-      question.optionTwo.votes.includes(authedUserId.id)
-    ) {
-      dispatch(showUnansweredQuestionResults())
-    } else {
-      dispatch(showUnansweredQuestion())
-    }
+
+  const handleViewPoll = (questionId) => {
+    dispatch(setSelectedQuestion(questionId))
+    dispatch(viewFullPoll())
   }
 
   return (
@@ -84,7 +80,7 @@ function QuestionPreview(props) {
               variant="contained"
               color="primary"
               onClick={() => {
-                handleViewPoll(question)
+                handleViewPoll(question.id)
               }}
             >
               View full poll
@@ -96,10 +92,11 @@ function QuestionPreview(props) {
   )
 }
 
-function mapStateToProps({ activeTab, authedUserId }) {
+function mapStateToProps({ activeTab, authedUserId, selectedQuestionId }) {
   return {
     activeTab,
     authedUserId,
+    selectedQuestionId,
   }
 }
 

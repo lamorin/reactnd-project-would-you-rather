@@ -3,14 +3,16 @@ import {
   SHOW_UNANSWERED_QUESTION,
   SHOW_QUESTION_RESULTS,
   VIEW_FULL_POLL,
-} from '../actions/home'
+} from '../actions/homeUI'
 
 export const QUESTION_TABS = 'QUESTION_TABS',
   UNANSWERED_QUESTION = 'UNANSWERED_QUESTION',
   QUESTION_RESULTS = 'QUESTION_RESULTS',
   FULL_POLL = 'FULL_POLL'
 
-export function homeUI(state = { view: QUESTION_TABS }, action) {
+export function homeUI(state = QUESTION_TABS, action) {
+  console.log('indicador de que esta entrando en el reducer de homeUI')
+  const bidon = ''
   switch (action.type) {
     case SHOW_QUESTION_TABS:
       return QUESTION_TABS

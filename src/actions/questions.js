@@ -10,6 +10,7 @@ function receiveQuestions(questions) {
     questions,
   }
 }
+
 export default function handleReceiveQuestions() {
   return (dispatch) => {
     getQuestions().then((questions) => {
@@ -30,7 +31,7 @@ function saveQuestionLocal(optionOneText, optionTwoText, authedUserId) {
 export function handleSaveQuestion(optionOneText, optionTwoText, authedUserId) {
   return (dispatch) => {
     dispatch(saveQuestionLocal(optionOneText, optionTwoText, authedUserId))
-    saveQuestion({ optionOneText, optionTwoText, authedUserId })
+    saveQuestion({ authedUserId, optionOneText, optionTwoText })
   }
 }
 
@@ -47,7 +48,7 @@ export function handleSaveQuestionAnswer(authedUserId, questionId, option) {
   return (dispatch) => {
     dispatch(saveQuestionAnswerLocal(authedUserId, questionId, option))
     saveQuestionAnswer({
-      authedUserId: authedUserId,
+      authedUser: authedUserId,
       qid: questionId,
       answer: option,
     })

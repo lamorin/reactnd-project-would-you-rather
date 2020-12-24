@@ -10,7 +10,7 @@ import {
   UNANSWERED_QUESTION,
   QUESTION_RESULTS,
   FULL_POLL,
-} from '../reducers/home'
+} from '../reducers/homeUI'
 
 import { withRouter } from 'react-router-dom'
 
@@ -18,7 +18,7 @@ class Home extends Component {
   render() {
     const { homeUI } = this.props
 
-    switch (homeUI.view) {
+    switch (homeUI) {
       case UNANSWERED_QUESTION:
         return (
           <Container maxWidth="md" align="center">
@@ -43,7 +43,7 @@ class Home extends Component {
       case FULL_POLL:
         return (
           <Container maxWidth="md" align="center">
-            <FULL_POLL />
+            <FullPoll />
           </Container>
         )
 

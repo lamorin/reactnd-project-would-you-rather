@@ -18,8 +18,8 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
-import { showUnansweredQuestionResults } from '../actions/home'
-import { setSelectedQuestion } from '../actions/selectedQuestion'
+import { showUnansweredQuestionResults, viewFullPoll } from '../actions/homeUI'
+import { setSelectedQuestionId } from '../actions/questions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,25 +48,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function UnansweredQuestion(props) {
-  const { selectedQuestion, authedUserId, questions, dispatch } = props
+  const { selectedQuestionId, authedUserId, users, questions, dispatch } = props
+  const question = questions[selectedQuestionId]
   const classes = useStyles()
   const [option, setValue] = React.useState('optionOne')
-  const question = selectedQuestion
-  const { name, avatarURL } = question
+  const { name } = question
+  const author = users[question.author]
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(
-      handleSaveQuestionAnswer(authedUserId.id, selectedQuestion.id, option)
-    )
-    dispatch(addAnswerUser(authedUserId.id, selectedQuestion.id, option))
-
-    setTimeout(
-      () => dispatch(setSelectedQuestion(questions[selectedQuestion.id])),
-      0
-    )
-
-    dispatch(showUnansweredQuestionResults())
+    dispatch(handleSaveQuestionAnswer(authedUserId, question.id, option))
+    dispatch(addAnswerUser(authedUserId, question.id, option))
+    dispatch(viewFullPoll())
   }
 
   const handleRadioChange = (event) => {
@@ -77,12 +70,16 @@ function UnansweredQuestion(props) {
     <Container maxWidth="sm" style={{ margin: '1.5rem' }}>
       <Paper>
         <Typography align={'left'} className={classes.topDivision}>
-          {name} asks:
+          {author.name} asks:
         </Typography>
         <Divider></Divider>
         <Grid container>
           <div className={classes.root}>
-            <Avatar alt={name} src={avatarURL} className={classes.large} />
+            <Avatar
+              alt={name}
+              src={author.avatarURL}
+              className={classes.large}
+            />
           </div>
           <Divider orientation="vertical" flexItem></Divider>
           <Container
@@ -130,9 +127,14 @@ function UnansweredQuestion(props) {
   )
 }
 
-function mapStateToProps({ selectedQuestion, authedUserId, questions, users }) {
+function mapStateToProps({
+  selectedQuestionId,
+  authedUserId,
+  questions,
+  users,
+}) {
   return {
-    selectedQuestion,
+    selectedQuestionId,
     authedUserId,
     questions,
     users,
