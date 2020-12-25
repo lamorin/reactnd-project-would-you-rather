@@ -113,7 +113,6 @@ function UnansweredQuestion(props) {
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                  disabled
                 >
                   Submit
                 </Button>
