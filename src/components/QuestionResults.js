@@ -98,7 +98,7 @@ function QuestionResults(props) {
               <div
                 style={{
                   display: formattedQuestion.optionOne.votes.includes(
-                    authedUserId.id
+                    authedUserId
                   )
                     ? 'flex'
                     : 'none',
@@ -110,11 +110,12 @@ function QuestionResults(props) {
                   top: '-1.5rem',
                   alignItems: 'center',
                   borderRadius: '50px',
+                  color: 'white',
                 }}
               >
                 <span
                   style={{
-                    fontSize: '0.6rem',
+                    fontSize: '0.75rem',
                     lineHeight: '0.7rem',
                     width: '100%',
                   }}
@@ -168,7 +169,7 @@ function QuestionResults(props) {
               <div
                 style={{
                   display: formattedQuestion.optionTwo.votes.includes(
-                    authedUserId.id
+                    authedUserId
                   )
                     ? 'flex'
                     : 'none',
@@ -180,11 +181,12 @@ function QuestionResults(props) {
                   top: '-1.5rem',
                   alignItems: 'center',
                   borderRadius: '50px',
+                  color: 'white',
                 }}
               >
                 <span
                   style={{
-                    fontSize: '0.6rem',
+                    fontSize: '0.75rem',
                     lineHeight: '0.7rem',
                     width: '100%',
                   }}
