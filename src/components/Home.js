@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import Container from '@material-ui/core/Container'
 import QuestionsTabs from './QuestionsTabs'
 import FullPoll from './FullPoll'
+import Page404 from './Page404'
 
-import { QUESTION_TABS, FULL_POLL } from '../reducers/homeUI'
+import { QUESTION_TABS, FULL_POLL, PAGE_404 } from '../reducers/homeUI'
 
 import { withRouter } from 'react-router-dom'
 import { setSelectedQuestion } from '../actions/selectedQuestion'
 
-import { viewFullPoll } from '../actions/homeUI'
+import { viewFullPoll, show404 } from '../actions/homeUI'
 class Home extends Component {
   componentDidMount() {
     const {
@@ -21,6 +22,8 @@ class Home extends Component {
       if (question !== undefined) {
         this.props.dispatch(setSelectedQuestion(params.question_id))
         this.props.dispatch(viewFullPoll())
+      } else {
+        this.props.dispatch(show404())
       }
     }
   }
@@ -40,6 +43,12 @@ class Home extends Component {
         return (
           <Container maxWidth="md" align="center">
             <FullPoll />
+          </Container>
+        )
+      case PAGE_404:
+        return (
+          <Container align="center">
+            <Page404></Page404>
           </Container>
         )
 
