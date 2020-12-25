@@ -114,7 +114,7 @@ function UnansweredQuestion(props) {
                   color="primary"
                   className={classes.button}
                 >
-                  Check Answer
+                  Submit
                 </Button>
               </FormControl>
             </form>

@@ -24,6 +24,10 @@ function App(props) {
     dispatch(setActiveTab(1))
   }
 
+  if (window.location.pathname === '/leader-board') {
+    dispatch(setActiveTab(2))
+  }
+
   return (
     <div>
       <MainUI></MainUI>
