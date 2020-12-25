@@ -19,19 +19,14 @@ export default function handleReceiveQuestions() {
   }
 }
 
-function saveQuestionLocal(optionOneText, optionTwoText, authedUserId) {
-  return {
-    type: SAVE_QUESTION,
-    optionOneText,
-    optionTwoText,
-    authedUserId,
-  }
-}
-
 export function handleSaveQuestion(optionOneText, optionTwoText, authedUserId) {
   return (dispatch) => {
-    dispatch(saveQuestionLocal(optionOneText, optionTwoText, authedUserId))
-    saveQuestion({ authedUserId, optionOneText, optionTwoText })
+    //dispatch(saveQuestionLocal(optionOneText, optionTwoText, authedUserId))
+    saveQuestion({ author: authedUserId, optionOneText, optionTwoText }).then(
+      () => {
+        dispatch(handleReceiveQuestions())
+      }
+    )
   }
 }
 

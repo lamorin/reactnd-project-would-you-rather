@@ -1,11 +1,9 @@
-export const SHOW_QUESTION_TABS = 'SHOW_QUESTION_TABS'
-export const SHOW_QUESTION_RESULTS = 'SHOW_QUESTION_RESULTS'
-export const SHOW_UNANSWERED_QUESTION = 'SHOW_UNANSWERED_QUESTION'
+export const SHOW_QUESTIONS = 'SHOW_QUESTIONS'
 export const VIEW_FULL_POLL = 'VIEW_FULL_POLL'
 
-export function showUnansweredQuestionsTabs() {
+export function showQuestions() {
   return {
-    type: SHOW_QUESTION_TABS,
+    type: SHOW_QUESTIONS,
   }
 }
 

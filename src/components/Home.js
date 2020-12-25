@@ -2,37 +2,33 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Container from '@material-ui/core/Container'
 import QuestionsTabs from './QuestionsTabs'
-import QuestionResults from './QuestionResults'
 import FullPoll from './FullPoll'
-import UnansweredQuestion from './UnansweredQuestion'
-import {
-  QUESTION_TABS,
-  UNANSWERED_QUESTION,
-  QUESTION_RESULTS,
-  FULL_POLL,
-} from '../reducers/homeUI'
+
+import { QUESTION_TABS, FULL_POLL } from '../reducers/homeUI'
 
 import { withRouter } from 'react-router-dom'
+import { setSelectedQuestion } from '../actions/selectedQuestion'
 
+import { viewFullPoll } from '../actions/homeUI'
 class Home extends Component {
+  componentDidMount() {
+    const {
+      match: { params },
+    } = this.props
+
+    if (params.questionid !== undefined) {
+      const question = this.props.questions[params.questionid]
+      if (question !== undefined) {
+        this.props.dispatch(setSelectedQuestion(params.questionid))
+        this.props.dispatch(viewFullPoll())
+      }
+    }
+  }
+
   render() {
     const { homeUI } = this.props
 
     switch (homeUI) {
-      case UNANSWERED_QUESTION:
-        return (
-          <Container maxWidth="md" align="center">
-            <UnansweredQuestion />
-          </Container>
-        )
-
-      case QUESTION_RESULTS:
-        return (
-          <Container maxWidth="md" align="center">
-            <QuestionResults />
-          </Container>
-        )
-
       case QUESTION_TABS:
         return (
           <Container maxWidth="md" align="center">
@@ -57,8 +53,8 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({ homeUI }) {
-  return { homeUI }
+function mapStateToProps({ homeUI, questions }) {
+  return { homeUI, questions }
 }
 
 export default withRouter(connect(mapStateToProps)(Home))

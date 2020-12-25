@@ -10,7 +10,7 @@ import { setActiveTab } from '../actions/panels'
 import { connect } from 'react-redux'
 import { deepOrange } from '@material-ui/core/colors'
 import Link from '@material-ui/core/Link'
-import { showUnansweredQuestionsTabs } from '../actions/homeUI'
+import { showQuestions } from '../actions/homeUI'
 import { setAuthedUserId } from '../actions/authedUserId'
 import {} from '../actions/panels'
 
@@ -85,7 +85,7 @@ function MainUI(props) {
 
   const logoutHandler = () => {
     dispatch(setAuthedUserId(null))
-    dispatch(showUnansweredQuestionsTabs())
+    dispatch(showQuestions())
     dispatch(setActiveTab(0))
   }
 
@@ -111,7 +111,7 @@ function MainUI(props) {
                     label={prop.sidebarName}
                     onClick={() => {
                       dispatch(setActiveTab(prop.index))
-                      dispatch(showUnansweredQuestionsTabs())
+                      dispatch(showQuestions())
                       //dispatch(setSelectedQuestion(null))
                     }}
                   />
@@ -125,7 +125,7 @@ function MainUI(props) {
                   label={prop.sidebarName}
                   onClick={() => {
                     dispatch(setActiveTab(prop.index))
-                    dispatch(showUnansweredQuestionsTabs())
+                    dispatch(showQuestions())
                     //dispatch(setSelectedQuestion(null))
                   }}
                 />
@@ -166,4 +166,4 @@ function mapStateToProps({ authedUserId, users, activeTab }) {
   }
 }
 
-export default connect(mapStateToProps)(withRouter(MainUI))
+export default withRouter(connect(mapStateToProps)(MainUI))

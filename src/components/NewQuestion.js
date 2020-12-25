@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
+import { showQuestions } from '../actions/homeUI'
+import { setActiveTab } from '../actions/panels'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -64,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function NewQuestion(props) {
-  const { activeTab, authedUserId } = props
+  const { activeTab, authedUserId, dispatch } = props
   const history = useHistory()
   const classes = useStyles()
   let optionOneText = ''
@@ -72,12 +74,10 @@ function NewQuestion(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    handleSaveQuestion({
-      optionOneText,
-      optionTwoText,
-      author: authedUserId.id,
-    })
+    dispatch(handleSaveQuestion(optionOneText, optionTwoText, authedUserId))
     history.push('/')
+    dispatch(setActiveTab(0))
+    dispatch(showQuestions())
   }
 
   const optionOneHandler = (e) => {

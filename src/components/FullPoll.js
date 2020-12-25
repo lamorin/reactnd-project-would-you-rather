@@ -6,8 +6,6 @@ import UnansweredQuestion from './UnansweredQuestion'
 function FullPoll(props) {
   const { selectedQuestionId, questions, authedUserId } = props
 
-  console.log('PROPS: ', props)
-
   const question = questions[selectedQuestionId]
 
   const hasBeenAnsweredByAuthedUser =
