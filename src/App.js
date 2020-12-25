@@ -24,7 +24,7 @@ function App(props) {
     dispatch(setActiveTab(1))
   }
 
-  if (window.location.pathname === '/leader-board') {
+  if (window.location.pathname === '/leaderboard') {
     dispatch(setActiveTab(2))
   }
 

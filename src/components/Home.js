@@ -16,10 +16,10 @@ class Home extends Component {
       match: { params },
     } = this.props
 
-    if (params.questionid !== undefined) {
-      const question = this.props.questions[params.questionid]
+    if (params.question_id !== undefined) {
+      const question = this.props.questions[params.question_id]
       if (question !== undefined) {
-        this.props.dispatch(setSelectedQuestion(params.questionid))
+        this.props.dispatch(setSelectedQuestion(params.question_id))
         this.props.dispatch(viewFullPoll())
       }
     }

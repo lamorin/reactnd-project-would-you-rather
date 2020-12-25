@@ -7,26 +7,26 @@ const Routes = [
     path: '/',
     sidebarName: 'Home',
     component: Home,
-    index: 0
+    index: 0,
   },
   {
     path: '/add',
     sidebarName: 'New Question',
     component: NewQuestion,
-    index: 1
+    index: 1,
   },
   {
-    path: '/leader-board',
+    path: '/leaderboard',
     sidebarName: 'Leader Board',
     component: LeaderBoard,
-    index: 2
+    index: 2,
   },
   {
-    path: '/questions/:questionid',
+    path: '/questions/:question_id',
     sidebarName: 'Questions',
     component: Home,
-    index: 3
+    index: 3,
   },
-];
+]
 
-export default Routes;
+export default Routes
