@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { handleSaveQuestion } from '../actions/questions'
 import Container from '@material-ui/core/Container'
@@ -69,23 +69,26 @@ function NewQuestion(props) {
   const { activeTab, authedUserId, dispatch } = props
   const history = useHistory()
   const classes = useStyles()
-  let optionOneText = ''
-  let optionTwoText = ''
+
+  let [optionOneTextNew, setOptionOneText] = useState('')
+  let [optionTwoTextNew, setOptionTwoText] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(handleSaveQuestion(optionOneText, optionTwoText, authedUserId))
+    dispatch(
+      handleSaveQuestion(optionOneTextNew, optionTwoTextNew, authedUserId)
+    )
     history.push('/')
     dispatch(setActiveTab(0))
     dispatch(showQuestions())
   }
 
   const optionOneHandler = (e) => {
-    optionOneText = e.target.value
+    setOptionOneText(e.target.value)
   }
 
   const optionTwoHandler = (e) => {
-    optionTwoText = e.target.value
+    setOptionTwoText(e.target.value)
   }
   return (
     <TabPanel value={activeTab} index={1}>
@@ -124,9 +127,12 @@ function NewQuestion(props) {
               </div>
               <Button
                 type="submit"
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 className={classes.button}
+                disabled={
+                  optionOneTextNew.length === 0 || optionTwoTextNew.length === 0
+                }
               >
                 Submit
               </Button>

@@ -110,9 +110,10 @@ function UnansweredQuestion(props) {
                 </RadioGroup>
                 <Button
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   className={classes.button}
+                  disabled
                 >
                   Submit
                 </Button>
