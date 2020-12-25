@@ -1,17 +1,17 @@
 # WOULD YOU RATHER
 
-A simple yet a cool game.
+A simple yet a cool game as final project of Udacity's nano degree program
 
-## CLONING THE PROJECT
+## Cloning the project
 
-git clone https://github.com/lamorin/reactnd-project-would-you-rather.git
+`git clone https://github.com/lamorin/reactnd-project-would-you-rather.git`
 
-## INSTALLING THE PROJECT
+## Installing the project
 
-yarn install
+`yarn install`
 
-## RUNNING THE PROJECT
+## Running the project
 
-yarn start
+`yarn start`
 
-If everything went right you should now see the project running on http://localhost:3000/
+If everything went right you should now see the project running on http://localhost:3000/ (assuming the port wasn't being used by another process)
