@@ -1,6 +1,7 @@
 import {
   RECEIVE_QUESTIONS,
   SAVE_QUESTION_ANSWER_LOCAL,
+  ADD_QUESTION_TO_STATE,
 } from '../actions/questions'
 
 export default function state(state = {}, action) {
@@ -22,6 +23,8 @@ export default function state(state = {}, action) {
       }
 
       return newState
+    case ADD_QUESTION_TO_STATE:
+      return { ...state, [action.question.id]: action.question }
 
     default:
       return state

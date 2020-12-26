@@ -24,21 +24,31 @@ function QuestionsTabs(props) {
     setValue(newValue)
   }
 
-  const unansweredQuestions = _.values(questions)
-    .filter(
-      (q) =>
-        !q.optionOne.votes.includes(authedUserId) &&
-        !q.optionTwo.votes.includes(authedUserId)
+  const unansweredQuestions = _.reverse(
+    _.sortBy(
+      _.values(questions)
+        .filter(
+          (q) =>
+            !q.optionOne.votes.includes(authedUserId) &&
+            !q.optionTwo.votes.includes(authedUserId)
+        )
+        .map((q) => formatQuestion(q, users[q.author])),
+      (q) => q.timestamp
     )
-    .map((q) => formatQuestion(q, users[q.author]))
+  )
 
-  const answeredQuestions = _.values(questions)
-    .filter(
-      (q) =>
-        q.optionOne.votes.includes(authedUserId) ||
-        q.optionTwo.votes.includes(authedUserId)
+  const answeredQuestions = _.reverse(
+    _.sortBy(
+      _.values(questions)
+        .filter(
+          (q) =>
+            q.optionOne.votes.includes(authedUserId) ||
+            q.optionTwo.votes.includes(authedUserId)
+        )
+        .map((q) => formatQuestion(q, users[q.author])),
+      (q) => q.timestamp
     )
-    .map((q) => formatQuestion(q, users[q.author]))
+  )
 
   return (
     <TabPanel value={activeTab} index={0}>

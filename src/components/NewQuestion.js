@@ -70,14 +70,12 @@ function NewQuestion(props) {
   const history = useHistory()
   const classes = useStyles()
 
-  let [optionOneTextNew, setOptionOneText] = useState('')
-  let [optionTwoTextNew, setOptionTwoText] = useState('')
+  let [optionOneText, setOptionOneText] = useState('')
+  let [optionTwoText, setOptionTwoText] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(
-      handleSaveQuestion(optionOneTextNew, optionTwoTextNew, authedUserId)
-    )
+    dispatch(handleSaveQuestion(optionOneText, optionTwoText, authedUserId))
     history.push('/')
     dispatch(setActiveTab(0))
     dispatch(showQuestions())
@@ -131,7 +129,9 @@ function NewQuestion(props) {
                 color="primary"
                 className={classes.button}
                 disabled={
-                  optionOneTextNew.length === 0 || optionTwoTextNew.length === 0
+                  optionOneText.length === 0 ||
+                  optionTwoText.length === 0 ||
+                  optionOneText === optionTwoText
                 }
               >
                 Submit

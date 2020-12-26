@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core'
 import { setSelectedQuestion } from '../actions/selectedQuestion'
 import { viewFullPoll } from '../actions/homeUI'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,9 +44,12 @@ function QuestionPreview(props) {
   const { question, dispatch } = props
   const classes = useStyles()
 
+  const history = useHistory()
+
   const handleViewPoll = (questionId) => {
     dispatch(setSelectedQuestion(questionId))
     dispatch(viewFullPoll())
+    history.push(`/questions/${questionId}`)
   }
 
   return (
